@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UCP / BSCS — What Will I Actually Study?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F5F3EC;
+    --surface:#FBFAF6;
+    --border:#E6E1D2;
+    --border-strong:#D5CFBB;
+    --ink:#1A1A17;
+    --ink-soft:#57544A;
+    --muted:#8F8B7D;
+    --teal:#1F6F5C;
+    --coral:#E8613F;
+
+    --c-prog:#3568A0;
+    --c-sys:#7A56A0;
+    --c-data:#B84070;
+    --c-theory:#C08A3A;
+    --c-net:#3E8F5E;
+    --c-web:#2E93A0;
+    --c-biz:#B4802E;
+    --c-gen:#767B85;
+
+    --cat-core-bg:#DDF0E4; --cat-core-fg:#1F6F5C;
+    --cat-math-bg:#FBE6D2; --cat-math-fg:#B4672B;
+    --cat-gen-bg:#F7DEE6; --cat-gen-fg:#A23E63;
+    --cat-sup-bg:#F0E6D2; --cat-sup-fg:#8A6B3D;
+    --cat-uni-bg:#E2E4F0; --cat-uni-fg:#4A4F7A;
+    --cat-cse-bg:#FBF0C7; --cat-cse-fg:#8A6D1F;
+
+    --radius-s:8px;
+    --radius-m:14px;
+    --radius-l:18px;
+    --ease:cubic-bezier(.2,.7,.3,1);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'IBM Plex Sans',sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  code, .mono{font-family:'IBM Plex Mono',monospace;}
+  h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;margin:0;line-height:1.08;letter-spacing:-0.02em;font-weight:700;}
+  a{color:inherit;}
+  button{font-family:inherit;}
+  ::selection{background:var(--coral);color:#fff;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+
+  .wrap{max-width:1200px;margin:0 auto;padding:0 24px;}
+
+  /* ================= NAV ================= */
+  /* ================= LOADER ================= */
+  #loader{
+    position:fixed;inset:0;z-index:999;
+    background:var(--bg);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;
+    cursor:pointer;
+    transition:opacity 0.45s var(--ease), visibility 0.45s;
+  }
+  #loader.hide{opacity:0;visibility:hidden;pointer-events:none;}
+  .loader-mark{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.3rem;color:var(--ink);}
+  .loader-mark .slash{color:var(--muted);margin:0 5px;font-weight:500;}
+  .loader-mark .brand{color:var(--coral);}
+  .loader-steps{display:flex;gap:10px;}
+  .loader-dot{
+    width:30px;height:30px;border-radius:50%;
+    border:2px solid var(--border-strong);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:var(--muted);
+    background:var(--surface);
+    transform:scale(1);
+    transition:transform 0.3s cubic-bezier(.34,1.6,.64,1), background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  }
+  .loader-dot.filled{
+    background:var(--ink);border-color:var(--ink);color:#fff;
+    transform:scale(1.15);
+  }
+  .loader-dot.filled.last{background:var(--coral);border-color:var(--coral);}
+  .loader-caption{
+    font-family:'IBM Plex Mono',monospace;font-size:0.76rem;color:var(--ink-soft);
+    min-height:16px;
+  }
+  .loader-skip{
+    position:absolute;bottom:26px;
+    font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:var(--muted);
+  }
+
+  .nav{
+    padding:22px 0;
+    border-bottom:1px solid var(--border);
+  }
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;}
+  .nav-mark{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.15rem;color:var(--ink);display:flex;align-items:center;gap:9px;}
+  .nav-logo{flex:none;}
+  .nav-mark .slash{color:var(--muted);margin:0 6px;font-weight:500;}
+  .nav-mark .brand{color:var(--coral);}
+  .nav-badge{
+    font-family:'IBM Plex Mono',monospace;font-size:0.75rem;color:var(--ink-soft);
+    letter-spacing:0.03em;
+  }
+  .nav-about-link{
+    font-size:0.82rem;color:var(--ink-soft);text-decoration:underline;text-decoration-color:var(--border-strong);
+    text-underline-offset:3px;
+    background:none;border:none;cursor:pointer;padding:0;font-family:inherit;
+  }
+  .nav-about-link:hover{color:var(--teal);}
+  @keyframes flashHighlight{
+    0%{box-shadow:0 0 0 0 rgba(232,97,63,0);}
+    20%{box-shadow:0 0 0 6px rgba(232,97,63,0.25);}
+    100%{box-shadow:0 0 0 0 rgba(232,97,63,0);}
+  }
+  .flash-highlight{animation:flashHighlight 1.1s ease;}
+
+  /* ================= HERO ================= */
+  .hero{padding:56px 0 44px;}
+  .hero-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:56px;align-items:start;}
+  .hero-eyebrow{
+    display:block;
+    font-family:'IBM Plex Mono',monospace;font-size:0.78rem;font-weight:600;
+    color:var(--teal);
+    letter-spacing:0.04em;
+    margin-bottom:18px;
+    opacity:0;animation:fadeUp 0.6s var(--ease) forwards;
+  }
+  .hero h1{
+    font-size:clamp(2.4rem, 4.6vw, 3.6rem);
+    max-width:12ch;
+    color:var(--ink);
+    opacity:0;animation:fadeUp 0.6s var(--ease) 0.06s forwards;
+  }
+  .hero p.lead{
+    max-width:46ch;
+    color:var(--ink-soft);
+    font-size:1.08rem;
+    margin-top:20px;
+    opacity:0;animation:fadeUp 0.6s var(--ease) 0.12s forwards;
+  }
+  .hero-hint{
+    display:flex;align-items:center;gap:10px;
+    margin-top:26px;
+    font-family:'IBM Plex Mono',monospace;font-size:0.72rem;
+    color:var(--ink-soft);letter-spacing:0.03em;
+    opacity:0;animation:fadeUp 0.6s var(--ease) 0.18s forwards;
+  }
+  .hero-hint .reddot{width:7px;height:7px;border-radius:50%;background:var(--coral);flex:none;}
+  .hero-progress{margin-top:8px;height:2px;background:var(--border-strong);border-radius:2px;overflow:hidden;
+    opacity:0;animation:fadeUp 0.6s var(--ease) 0.18s forwards;}
+  .hero-progress-fill{height:100%;width:0%;background:var(--coral);transition:width 1.1s var(--ease) 0.4s;}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+  .stats-box{
+    border:1px solid var(--border-strong);
+    border-radius:var(--radius-m);
+    overflow:hidden;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    background:var(--surface);
+    opacity:0;animation:fadeUp 0.6s var(--ease) 0.2s forwards;
+  }
+  .stat{padding:22px 22px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);}
+  .stat:nth-child(2n){border-right:none;}
+  .stat:nth-child(3),.stat:nth-child(4){border-bottom:none;}
+  .stat .num{font-family:'Space Grotesk',sans-serif;font-size:1.9rem;font-weight:700;color:var(--ink);}
+  .stat .lbl{font-size:0.82rem;color:var(--muted);margin-top:4px;}
+
+  /* ================= SEARCH ================= */
+  .searchbar{padding:6px 0 28px;}
+  .search-input-wrap{
+    display:flex;align-items:center;gap:12px;
+    border:1px solid var(--border-strong);
+    border-radius:var(--radius-m);
+    padding:16px 20px;
+    background:var(--surface);
+    transition:border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .search-input-wrap:focus-within{border-color:var(--teal); box-shadow:0 0 0 3px rgba(31,111,92,0.1);}
+  .search-input-wrap input{
+    border:none;background:transparent;outline:none;
+    font-size:1rem;width:100%;color:var(--ink);
+    font-family:'IBM Plex Sans',sans-serif;
+  }
+  .search-input-wrap input::placeholder{color:var(--muted);}
+  .search-icon{color:var(--muted);flex:none;}
+  .search-scope{
+    font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--teal);
+    white-space:nowrap;flex:none;
+  }
+  .search-note{font-size:0.82rem;color:var(--muted);margin-top:10px;padding-left:2px;}
+  .search-clear-btn{
+    flex:none;border:none;background:var(--border);color:var(--ink-soft);
+    width:24px;height:24px;border-radius:50%;cursor:pointer;font-size:0.72rem;
+    display:flex;align-items:center;justify-content:center;line-height:1;
+  }
+  .search-clear-btn:hover{background:var(--border-strong);}
+
+  .search-results-panel{
+    margin:-4px 0 26px;
+    animation:fadeUp 0.25s var(--ease) forwards;
+  }
+
+  /* ================= CATEGORY CHIPS ================= */
+  .chip-row{display:flex;flex-wrap:wrap;gap:9px;}
+  .chip{
+    display:inline-flex;align-items:center;gap:7px;
+    border:1px solid var(--border-strong);
+    background:var(--surface);
+    padding:9px 16px;
+    border-radius:100px;
+    font-size:0.86rem;font-weight:500;
+    cursor:pointer;
+    color:var(--ink);
+    transition:all 0.15s ease;
+  }
+  .chip .dot{width:8px;height:8px;border-radius:50%;flex:none;}
+  .chip:hover{border-color:var(--ink);}
+  .chip.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+  .cluster-row{margin-top:14px;}
+  .cluster-row-label{font-size:0.78rem;color:var(--muted);margin-bottom:10px;}
+  .cluster-toggle{
+    display:inline-flex;align-items:center;gap:7px;
+    background:none;border:none;cursor:pointer;padding:0;
+    font-family:'IBM Plex Sans',sans-serif;font-size:0.85rem;color:var(--ink-soft);
+    text-decoration:underline;text-decoration-color:var(--border-strong);text-underline-offset:3px;
+  }
+  .cluster-toggle:hover{color:var(--teal);}
+  .cluster-toggle svg{transition:transform 0.2s ease;flex:none;}
+  .cluster-row.expanded .cluster-toggle svg{transform:rotate(180deg);}
+  .cluster-collapse{max-height:0;overflow:hidden;transition:max-height 0.3s var(--ease);}
+  .cluster-row.expanded .cluster-collapse{max-height:400px;}
+  .cluster-collapse .chip-row{margin-top:14px;}
+  .chip.chip-sm{padding:6px 13px;font-size:0.8rem;}
+
+  /* ================= SEMESTER STEPPER ================= */
+  .stepper-section{padding:34px 0 8px;}
+  .stepper{
+    display:flex;align-items:flex-start;justify-content:space-between;
+    max-width:960px;margin:0 auto;
+    position:relative;
+  }
+  .step{display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;flex:1;position:relative;}
+  .step-line{
+    position:absolute;top:22px;left:50%;width:100%;height:2px;background:var(--border-strong);z-index:0;
+  }
+  .step:last-child .step-line{display:none;}
+  .step-circle{
+    width:44px;height:44px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.05rem;
+    background:var(--ink);color:#fff;
+    position:relative;z-index:1;
+    transition:background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    border:3px solid var(--bg);
+  }
+  .step:hover .step-circle{transform:translateY(-2px);}
+  .step.active .step-circle{background:var(--coral);box-shadow:0 0 0 4px rgba(232,97,63,0.18);}
+  .step-label{font-family:'IBM Plex Sans',sans-serif;font-weight:700;font-size:0.78rem;color:var(--ink);}
+  .step-year{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);}
+
+  /* ================= SECTIONS ================= */
+  section.block{padding:52px 0;}
+  .section-heading-row{
+    display:flex;align-items:flex-end;justify-content:space-between;gap:16px;
+    margin-bottom:26px;flex-wrap:wrap;
+  }
+  .section-eyebrow-tag{
+    display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:0.68rem;font-weight:700;
+    letter-spacing:0.04em;padding:4px 12px;border-radius:100px;margin-bottom:12px;
+  }
+  .section-heading-row h2{font-size:clamp(1.6rem, 2.6vw, 2.1rem);}
+  .section-heading-row .subtitle{color:var(--ink-soft);font-size:1rem;margin-top:6px;}
+  .count-badge{
+    font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--muted);
+    letter-spacing:0.03em;white-space:nowrap;padding-bottom:4px;
+  }
+
+  /* ================= COURSE GRID ================= */
+  .course-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:16px;
+  }
+  .course-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius-m);
+    padding:22px;
+    transition:border-color 0.15s ease, box-shadow 0.15s ease;
+    cursor:pointer;
+  }
+  .course-card:hover{border-color:var(--border-strong); box-shadow:0 3px 14px -6px rgba(26,26,23,0.1);}
+  .course-card.open{border-color:var(--border-strong);}
+  .course-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+  .course-code{font-family:'IBM Plex Mono',monospace;font-size:0.76rem;color:var(--muted);}
+  .credit-label{font-family:'IBM Plex Mono',monospace;font-size:0.78rem;color:var(--ink-soft);white-space:nowrap;}
+  .course-title{font-size:1.12rem;font-weight:700;color:var(--ink);margin-top:10px;}
+  .cat-pill{
+    display:inline-block;
+    font-size:0.68rem;font-weight:700;letter-spacing:0.02em;
+    padding:3px 11px;border-radius:100px;
+    margin-top:10px;
+  }
+  .course-teaser{
+    color:var(--ink-soft);font-size:0.9rem;margin-top:10px;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  }
+  .card-foot{display:flex;align-items:center;justify-content:flex-end;margin-top:14px;}
+  .expand-hint{
+    font-family:'IBM Plex Mono',monospace;font-size:0.7rem;color:var(--muted);
+    display:flex;align-items:center;gap:5px;
+    transition:color 0.15s ease;
+  }
+  .course-card:hover .expand-hint, .course-card.open .expand-hint{color:var(--teal);}
+  .expand-hint svg{transition:transform 0.25s var(--ease);}
+  .course-card.open .expand-hint svg{transform:rotate(90deg);}
+
+  .course-body{
+    display:grid;grid-template-rows:0fr;
+    transition:grid-template-rows 0.3s var(--ease);
+  }
+  .course-card.open .course-body{grid-template-rows:1fr;}
+  .course-body-inner{overflow:hidden;}
+  .course-body-content{padding-top:16px;margin-top:14px;border-top:1px solid var(--border);}
+  .credit-breakdown{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+  .credit-chip{
+    font-family:'IBM Plex Mono',monospace;font-size:0.74rem;color:var(--ink-soft);
+    border:1px solid var(--border);padding:4px 10px;border-radius:6px;background:var(--bg);
+  }
+  .credit-chip b{color:var(--ink);}
+  .topics-label{font-size:0.72rem;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em;}
+  .topics-list{margin:0 0 14px 0;padding:0;list-style:none;font-size:0.89rem;color:var(--ink-soft);}
+  .topics-list li{margin-bottom:8px;padding-left:16px;position:relative;}
+  .topics-list li::before{content:"–";position:absolute;left:0;top:0;color:var(--card-color,var(--muted));font-weight:700;}
+  .prereq-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:0.8rem;}
+  .prereq-row .plabel{color:var(--muted);}
+  .prereq-chip{
+    font-family:'IBM Plex Mono',monospace;background:var(--bg);border:1px solid var(--border-strong);
+    padding:4px 10px;border-radius:6px;cursor:pointer;color:var(--ink-soft);transition:border-color 0.15s ease;
+  }
+  .prereq-chip:hover{border-color:var(--teal);color:var(--teal);}
+  .no-prereq{color:var(--muted);font-size:0.8rem;}
+
+  .empty-state{
+    grid-column:1/-1;
+    padding:56px 24px;text-align:center;color:var(--ink-soft);
+    border:1px dashed var(--border-strong);border-radius:var(--radius-m);background:var(--surface);
+  }
+  .empty-state strong{color:var(--ink);display:block;margin-bottom:6px;font-size:1.15rem;font-family:'Space Grotesk',sans-serif;}
+
+  /* ================= ELECTIVE COMPARISON (clickable, matches course-card outline pattern) ================= */
+  .elective-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:14px;}
+  .elective-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-m);padding:20px;cursor:pointer;transition:border-color 0.15s ease, box-shadow 0.15s ease;}
+  .elective-card:hover{border-color:var(--border-strong); box-shadow:0 3px 14px -6px rgba(26,26,23,0.1);}
+  .elective-card h4{font-size:1.05rem;color:var(--ink);}
+  .elective-card .code{font-family:'IBM Plex Mono',monospace;font-size:0.72rem;color:var(--muted);margin-bottom:10px;display:block;}
+  .elective-card .desc{color:var(--ink-soft);font-size:0.88rem;margin-top:8px;}
+  .elective-card-meta{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:16px;}
+  .elective-credit-tag{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);letter-spacing:0.03em;}
+  .elective-toggle{font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--teal);letter-spacing:0.03em;display:flex;align-items:center;gap:5px;}
+  .elective-toggle svg{transition:transform 0.25s var(--ease);}
+  .elective-card.open .elective-toggle svg{transform:rotate(90deg);}
+  .elective-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows 0.3s var(--ease);}
+  .elective-card.open .elective-body{grid-template-rows:1fr;}
+  .elective-body-inner{overflow:hidden;}
+  .elective-body-content{padding-top:16px;margin-top:14px;border-top:1px solid var(--border);}
+  .elective-topics-label{font-size:0.7rem;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:0.05em;font-weight:700;}
+  .elective-card ul{padding-left:0;list-style:none;margin:0 0 14px 0;font-size:0.87rem;color:var(--ink-soft);}
+  .elective-card li{margin-bottom:9px;padding-left:16px;position:relative;}
+  .elective-card li::before{content:"";position:absolute;left:0;top:7px;width:5px;height:5px;border-radius:50%;background:var(--teal);}
+  .elective-availability{font-size:0.82rem;color:var(--muted);padding-top:12px;border-top:1px solid var(--border);}
+
+  /* ================= PREREQUISITE CHAINS ================= */
+  .chain-path{margin-bottom:30px;}
+  .chain-path:last-child{margin-bottom:0;}
+  .chain-path-label{
+    font-family:'IBM Plex Mono',monospace;font-size:0.74rem;color:var(--muted);
+    margin-bottom:12px;letter-spacing:0.02em;
+  }
+  .chain-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px;}
+  .chain-node{
+    display:flex;align-items:center;gap:8px;
+    border:1.5px solid var(--border-strong);
+    background:var(--surface);
+    border-radius:100px;
+    padding:9px 16px 9px 12px;
+    cursor:pointer;
+    transition:all 0.2s var(--ease);
+    max-width:260px;
+  }
+  .chain-node .badge{
+    width:20px;height:20px;border-radius:50%;flex:none;
+    display:flex;align-items:center;justify-content:center;
+    font-size:0.65rem;font-family:'IBM Plex Mono',monospace;font-weight:600;
+    background:var(--border);color:var(--muted);
+    transition:all 0.2s ease;
+  }
+  .chain-node .label{font-size:0.83rem;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .chain-node.done{background:var(--ink);border-color:var(--ink);}
+  .chain-node.done .badge{background:var(--teal);color:#fff;}
+  .chain-node.done .label{color:#fff;}
+  .chain-node.next{border-color:var(--coral);animation:nextPulse 1.6s ease-in-out infinite;}
+  .chain-node.next .badge{background:var(--coral);color:#fff;}
+  .chain-node.next .label{color:var(--ink);font-weight:600;}
+  .chain-node.locked{opacity:0.55;}
+  @keyframes nextPulse{
+    0%,100%{box-shadow:0 0 0 0 rgba(232,97,63,0.25);}
+    50%{box-shadow:0 0 0 5px rgba(232,97,63,0.12);}
+  }
+  .chain-arrow{color:var(--border-strong);flex:none;}
+  .chain-node.reached-arrow{color:var(--ink-soft);}
+  .chain-hint{font-size:0.68rem;color:var(--teal);font-family:'IBM Plex Mono',monospace;margin-left:4px;white-space:nowrap;}
+
+  @media (max-width:640px){
+    .chain-node{max-width:none;padding:8px 13px 8px 10px;}
+    .chain-node .label{white-space:normal;}
+  }
+
+  footer{background:var(--surface);color:var(--muted);padding:36px 0;font-size:0.83rem;border-top:1px solid var(--border);}
+  footer strong{color:var(--ink);font-family:'Space Grotesk',sans-serif;}
+  footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+
+  section.block.alt-section{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+
+  /* ================= ABOUT ================= */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .about-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-m);padding:24px;}
+  .about-card h4{font-size:1.05rem;color:var(--ink);margin-bottom:10px;}
+  .about-card p{font-size:0.92rem;color:var(--ink-soft);margin:0 0 12px 0;}
+  .about-card p:last-child{margin-bottom:0;}
+  .disclaimer-card{background:var(--cat-math-bg);border-color:#EAD2AE;}
+  .disclaimer-card h4{color:var(--cat-math-fg);}
+  .disclaimer-card p{color:#6B4A1E;}
+  .disclaimer-card strong{color:var(--cat-math-fg);}
+
+  .elective-card .sem-tag{
+    font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--muted);
+    display:block;margin-top:2px;
+  }
+
+  /* ================= CS ELECTIVE GROUPS (collapsible by cluster) ================= */
+  .cse-group{border:1px solid var(--border);border-radius:var(--radius-m);background:var(--surface);margin-bottom:12px;overflow:hidden;}
+  .cse-group:last-child{margin-bottom:0;}
+  .cse-group-toggle{
+    width:100%;display:flex;align-items:center;justify-content:space-between;
+    padding:16px 18px;background:none;border:none;cursor:pointer;text-align:left;
+  }
+  .cse-group-title{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.98rem;color:var(--ink);}
+  .cse-group-title .dot{width:9px;height:9px;border-radius:50%;flex:none;}
+  .cse-group-count{font-family:'IBM Plex Mono',monospace;font-size:0.76rem;color:var(--muted);font-weight:400;}
+  .cse-group-toggle svg{color:var(--muted);transition:transform 0.2s ease;flex:none;}
+  .cse-group.expanded .cse-group-toggle svg{transform:rotate(180deg);}
+  .cse-group-collapse{max-height:0;overflow:hidden;transition:max-height 0.35s var(--ease);}
+  .cse-group.expanded .cse-group-collapse{max-height:2400px;}
+  .cse-inner-grid{padding:0 18px 18px;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));}
+
+  @media (max-width:760px){
+    .about-grid{grid-template-columns:1fr;}
+  }
+
+  @media (max-width:900px){
+    .hero-grid{grid-template-columns:1fr;gap:32px;}
+    .course-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:640px){
+    .stepper{
+      display:grid;
+      grid-template-columns:repeat(4, 1fr);
+      gap:20px 6px;
+      max-width:100%;
+    }
+    .step{width:auto;}
+    .step-line{display:none;}
+    .step-circle{width:38px;height:38px;font-size:0.92rem;border-width:2px;}
+    .step-label{font-size:0.7rem;}
+    .step-year{font-size:0.62rem;}
+    .nav .wrap{flex-wrap:wrap;row-gap:6px;}
+    .nav .wrap > div:last-child{flex-wrap:wrap;row-gap:4px;}
+    .search-scope{display:none;}
+    .hero{padding:44px 0 32px;}
+    section.block{padding:40px 0;}
+    .course-card{padding:18px;}
+  }
+</style>
+</head>
+<body>
+
+<div id="loader">
+  <div class="loader-mark">
+    <svg width="34" height="34" viewBox="0 0 40 40" fill="none" style="vertical-align:-9px;margin-right:8px;">
+      <circle cx="20" cy="20" r="19" fill="var(--ink)"/>
+      <circle cx="20" cy="20" r="19" stroke="var(--coral)" stroke-width="1.4"/>
+      <path d="M20 10L31 15.5L20 21L9 15.5L20 10Z" fill="var(--bg)"/>
+      <path d="M14 18V24.5C14 24.5 16.5 27 20 27C23.5 27 26 24.5 26 24.5V18" stroke="var(--bg)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M31 15.5V22" stroke="var(--coral)" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>UCP<span class="slash">/</span><span class="brand">BSCS</span></div>
+  <div class="loader-steps" id="loaderSteps"></div>
+  <div class="loader-caption" id="loaderCaption">Mapping Semester 1...</div>
+  <div class="loader-skip">tap anywhere to skip</div>
+</div>
+
+<nav class="nav">
+  <div class="wrap">
+    <div class="nav-mark">
+      <svg class="nav-logo" width="30" height="30" viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="19" fill="var(--ink)"/>
+        <circle cx="20" cy="20" r="19" stroke="var(--coral)" stroke-width="1.4"/>
+        <path d="M20 10L31 15.5L20 21L9 15.5L20 10Z" fill="var(--bg)"/>
+        <path d="M14 18V24.5C14 24.5 16.5 27 20 27C23.5 27 26 24.5 26 24.5V18" stroke="var(--bg)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M31 15.5V22" stroke="var(--coral)" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      UCP<span class="slash">/</span><span class="brand">BSCS</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <button id="aboutNavBtn" class="nav-about-link">About &amp; disclaimer</button>
+      <div class="nav-badge">COURSE EXPLORER · 132 CR</div>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="hero-eyebrow">UNIVERSITY OF CENTRAL PUNJAB · LAHORE</span>
+      <h1>What will I actually study?</h1>
+      <p class="lead">A semester-by-semester map of the BS Computer Science degree, written like a senior explaining the route, not a brochure.</p>
+      <div class="hero-hint"><span class="reddot"></span>START ANYWHERE. OPEN A SEMESTER AND SEE WHAT IS WAITING FOR YOU.</div>
+      <div class="hero-progress"><div class="hero-progress-fill" id="heroProgress"></div></div>
+    </div>
+    <div class="stats-box" id="statsRow"></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="searchbar">
+    <div class="search-input-wrap">
+      <svg class="search-icon" width="17" height="17" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5.2" stroke="currentColor" stroke-width="1.4"/><line x1="10.8" y1="10.8" x2="14.5" y2="14.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      <input type="text" id="searchInput" placeholder="Search all 8 semesters by course, code or topic...">
+      <button id="searchClearBtn" class="search-clear-btn" style="display:none" aria-label="Clear search">✕</button>
+    </div>
+  </div>
+
+  <div id="searchResultsPanel" class="search-results-panel" style="display:none">
+    <div class="section-heading-row" style="margin-bottom:16px;">
+      <div>
+        <h2 id="searchHeading">Results</h2>
+        <div class="subtitle" id="searchSub"></div>
+      </div>
+      <div class="count-badge" id="searchCountBadge"></div>
+    </div>
+    <div class="course-grid" id="searchResultsContainer"></div>
+  </div>
+
+  <div id="browseControls">
+    <div class="chip-row" id="categoryChips"></div>
+    <div class="cluster-row" id="clusterRow">
+      <button class="cluster-toggle" id="clusterToggle">Or browse by subject cluster, across every semester <svg width="9" height="9" viewBox="0 0 14 14" fill="none"><path d="M3 5.5L7 9.5L11 5.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="cluster-collapse"><div class="chip-row" id="clusterChips"></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="stepperWrap" class="stepper-section wrap">
+  <div class="stepper" id="stepper"></div>
+</div>
+
+<section class="block" id="resultsSection">
+  <div class="wrap">
+    <div class="section-heading-row">
+      <div>
+        <h2 id="resultsHeading">Semester 1</h2>
+        <div class="subtitle" id="resultsSub">Your starting point.</div>
+      </div>
+      <div class="count-badge" id="countBadge">6 COURSES SHOWN</div>
+    </div>
+    <div class="course-grid" id="resultsContainer"></div>
+  </div>
+</section>
+
+<section class="block alt-section" id="chainSection">
+  <div class="wrap">
+    <div class="section-heading-row">
+      <div>
+        <h2>What unlocks what</h2>
+        <div class="subtitle">Click a course to mark it done and see what it unlocks next. A simplified view of the degree's real prerequisite chains — check each course's own outline for its full requirements.</div>
+      </div>
+    </div>
+    <div id="chainContainer"></div>
+  </div>
+</section>
+
+<section class="block" id="electiveSection">
+  <div class="wrap">
+    <div class="section-heading-row">
+      <div>
+        <span class="section-eyebrow-tag" style="background:var(--cat-uni-bg);color:var(--cat-uni-fg)">UNIVERSITY ELECTIVE</span>
+        <h2>University Elective — pick 1 of 4</h2>
+        <div class="subtitle">A single Semester 1–2 general-education requirement. Every BSCS student takes exactly one of these. Compared side by side instead of four separate pages.</div>
+      </div>
+    </div>
+    <div class="elective-grid" id="electiveGrid"></div>
+  </div>
+</section>
+
+<section class="block alt-section" id="csElectiveSection">
+  <div class="wrap">
+    <div class="section-heading-row">
+      <div>
+        <span class="section-eyebrow-tag" style="background:var(--cat-cse-bg);color:var(--cat-cse-fg)">CS ELECTIVE</span>
+        <h2>CS Elective menu</h2>
+        <div class="subtitle">Technical electives you'll choose from repeatedly, mostly in Semesters 5–8. This is the full pool — exactly which ones run, and in which semester, depends on your intake year and what UCP schedules that term.</div>
+      </div>
+    </div>
+    <div class="elective-grid" id="csElectiveGrid"></div>
+  </div>
+</section>
+
+<section class="block" id="aboutSection">
+  <div class="wrap">
+    <div class="section-heading-row">
+      <div>
+        <h2>About this project</h2>
+        <div class="subtitle">What this is, and what it isn't.</div>
+      </div>
+    </div>
+    <div class="about-grid">
+      <div class="about-card">
+        <h4>Why this exists</h4>
+        <p>Googling a course name usually returns an MIT- or Stanford-depth syllabus that has nothing to do with what gets taught in a single semester at UCP. This is a plain-language map of the actual BS Computer Science degree — what each course covers, how many credit hours it carries, and what it requires before you can take it — built so you can decide on a semester or an elective in a few minutes instead of digging through PDFs.</p>
+      </div>
+      <div class="about-card disclaimer-card">
+        <h4>⚠ Disclaimer</h4>
+        <p>This is <strong>not an official University of Central Punjab website</strong> and isn't published or endorsed by UCP. It's a student-made reference built from UCP's public scheme-of-studies and course-offering documents.</p>
+        <p>Course structures, prerequisites, credit hours, and — especially — which electives are offered in a given semester all change between intakes and academic years. Always confirm current requirements with your academic advisor or UCP's official student portal before making enrollment decisions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div><strong>UCP BSCS Course Outline Explorer</strong><br>A student-made reference, not an official UCP publication.</div>
+    <div style="max-width:52ch;">Course structure is based on UCP's official BS(CS) scheme of studies and course-offering records. UCP revises curricula periodically — always confirm specific electives, prerequisites, and current offerings with your academic advisor or the official UCP student portal before finalizing enrollment.</div>
+  </div>
+</footer>
+
+<script>
+/* =========================================================
+   DATA
+   ========================================================= */
+const CLUSTERS = [
+  {id:'prog-dev', name:'Programming & Software', hex:'#3568A0'},
+  {id:'sys-arch', name:'Systems & Architecture', hex:'#7A56A0'},
+  {id:'data-ai', name:'Data, AI & Machine Learning', hex:'#B84070'},
+  {id:'theory-math', name:'Theory & Mathematics', hex:'#C08A3A'},
+  {id:'net-sec', name:'Networks & Security', hex:'#3E8F5E'},
+  {id:'web-mobile', name:'Web & Mobile Dev', hex:'#2E93A0'},
+  {id:'biz-prof', name:'Business & Professional', hex:'#B4802E'},
+  {id:'gen-ed', name:'General Education', hex:'#767B85'},
+];
+const CLUSTER_MAP = Object.fromEntries(CLUSTERS.map(c=>[c.id,c]));
+
+const CATEGORIES = [
+  {id:'core', label:'Core', bg:'var(--cat-core-bg)', fg:'var(--cat-core-fg)'},
+  {id:'cs-elective', label:'CS Elective', bg:'var(--cat-cse-bg)', fg:'var(--cat-cse-fg)'},
+  {id:'uni-elective', label:'University Elective', bg:'var(--cat-uni-bg)', fg:'var(--cat-uni-fg)'},
+  {id:'gen-ed', label:'General Education', bg:'var(--cat-gen-bg)', fg:'var(--cat-gen-fg)'},
+  {id:'math-sci', label:'Math & Science', bg:'var(--cat-math-bg)', fg:'var(--cat-math-fg)'},
+  {id:'supporting', label:'Supporting', bg:'var(--cat-sup-bg)', fg:'var(--cat-sup-fg)'},
+];
+const CAT_MAP = Object.fromEntries(CATEGORIES.map(c=>[c.id,c]));
+
+const SEM_SUBTITLES = {
+  1:"Your starting point.",
+  2:"Where real programming begins.",
+  3:"Everything gets more serious.",
+  4:"Arguably the most interview-relevant semester in the degree.",
+  5:"Electives start opening up.",
+  6:"Theory meets application.",
+  7:"Your final year project begins.",
+  8:"The home stretch.",
+};
+
+let _id = 0;
+const nid = () => 'c' + (_id++);
+
+const COURSES = [
+// ---------------- SEMESTER 1 ----------------
+{code:'CSCS1513', lab:'CSCS1511', title:'Introduction to Computing', credits:'3+1', sem:1, cluster:'prog-dev', category:'core', prereq:null,
+ why:"This sets the vocabulary you'll use for the next four years — CPU, RAM, OS, protocol — before you touch a single line of real code.",
+ topics:['Binary and number systems, and how data is represented digitally','How CPU, memory and storage fit together at a conceptual level','Operating systems from a user\'s view: files, folders, processes','How the internet moves data — IP addresses, browsers, servers','First exposure to logical thinking through flowcharts and pseudocode','Basic digital citizenship and cybersecurity hygiene','Lab: hands-on OS navigation, productivity tools, a first simple web page']},
+{code:'CSSS1723', lab:null, title:'Basic Electronics', credits:3, sem:1, cluster:'sys-arch', category:'math-sci', prereq:null,
+ why:"The hardware layer under every program you'll ever write starts here.",
+ topics:['Voltage, current, resistance and Ohm\u2019s law','Series and parallel circuits','Diodes, transistors and basic semiconductor behavior','Reading and interpreting circuit diagrams','How digital circuits are built out of analog components','Lab: building and testing simple circuits']},
+{code:'ENG101', lab:null, title:'English Composition', credits:3, sem:1, cluster:'gen-ed', category:'gen-ed', prereq:null,
+ why:"Every report, proposal and thesis you write later leans on this.",
+ topics:['Paragraph and essay structure','Thesis-driven academic writing','Grammar and sentence-level revision','Summarizing and paraphrasing sources responsibly','Basic citation practice','Peer review and editing as a process']},
+{code:'PAK101', lab:null, title:'Pakistan Studies', credits:2, sem:1, cluster:'gen-ed', category:'gen-ed', prereq:null,
+ why:"A mandatory HEC general-education requirement for every Pakistani undergraduate, regardless of major.",
+ topics:['Ideology and history of the Pakistan movement','Constitutional development of Pakistan','Key political and economic milestones','Contemporary national issues']},
+{code:'ENT101', lab:null, title:'Fundamentals of Entrepreneurship', credits:3, sem:1, cluster:'biz-prof', category:'supporting', prereq:null,
+ why:"Plants the seed for students who'll eventually build products, not just code them.",
+ topics:['What makes an idea a viable business','The business model canvas, in practice','Recognizing and validating opportunities','Basics of startup funding and pitching','Short case studies of small ventures']},
+{code:'ANT101', lab:null, title:'Anthropology', credits:3, sem:1, cluster:'gen-ed', category:'uni-elective', prereq:null,
+ why:"Best if you're curious why people and societies behave the way they do — useful groundwork if you're drawn to UX or HCI later.",
+ topics:['What culture is, and how anthropologists study it','Human evolution and the origins of society, at an intro level','Kinship, ritual and belief systems across cultures','Basic fieldwork and ethnography methods','Case studies of different societies']},
+{code:'PLS101', lab:null, title:'Introduction to Political Science', credits:3, sem:1, cluster:'gen-ed', category:'uni-elective', prereq:null,
+ why:"Best if you want to understand the systems that end up regulating tech policy and data law.",
+ topics:['What political science studies, and how','Forms of government and political systems','The state, sovereignty and power','Pakistan\'s political system in context','Introduction to major political ideologies']},
+{code:'PSY101', lab:null, title:'Introduction to Psychology', credits:3, sem:1, cluster:'gen-ed', category:'uni-elective', prereq:null,
+ why:"Best if you're leaning toward HCI or UX design, or just want to understand user behavior later.",
+ topics:['Major psychological perspectives (behaviorist, cognitive, etc.)','How memory, learning and perception work','Personality and motivation basics','Intro to developmental and social psychology','Basic research methods in psychology']},
+{code:'INR101', lab:null, title:'International Relations', credits:3, sem:1, cluster:'gen-ed', category:'uni-elective', prereq:null,
+ why:"Best if you're interested in how global politics shapes tech policy, trade and outsourcing.",
+ topics:['Key theories of international relations','The state system and diplomacy basics','International organizations, like the UN','Globalization and its effects','Pakistan\'s foreign policy in outline']},
+{code:'CSSS1813', lab:null, title:'Pre-Calculus', credits:3, sem:1, cluster:'theory-math', category:'math-sci', prereq:null,
+ why:"Only assigned if your placement test shows you need it before Calculus — a math on-ramp, not an extra burden.",
+ topics:['Algebra refresher','Functions and their graphs','Exponentials and logarithms','Trigonometry basics','Direct preparation for Calculus']},
+
+// ---------------- SEMESTER 2 ----------------
+{code:'CSCP1013', lab:'CSCP1011', title:'Programming Fundamentals', credits:'3+1', sem:2, cluster:'prog-dev', category:'core', prereq:'CSCS1513',
+ why:"The single most important course in the entire degree — everything from here on assumes you can write and debug real code.",
+ topics:['Variables, data types and operators','Conditionals and control flow','Loops and iteration patterns','Functions and scope','Arrays and basic data organization','Reading error messages and debugging systematically','Breaking a problem down before you code it','Lab: dozens of small programs to build real muscle memory']},
+{code:'CSCS2523', lab:'CSCS2521', title:'Digital Logic and Design', credits:'3+1', sem:2, cluster:'sys-arch', category:'core', prereq:'CSSS1723',
+ why:"Shows you, gate by gate, how '1+1' becomes a physical electrical signal — the bridge between electronics and computing.",
+ topics:['Boolean algebra and logic gates','Truth tables and Karnaugh maps','Combinational circuits: adders, multiplexers','Sequential circuits: flip-flops, counters','How an ALU is built from these primitives','Lab: building and simulating simple digital circuits']},
+{code:'ENG102', lab:null, title:'Communication & Presentation Skills', credits:3, sem:2, cluster:'gen-ed', category:'gen-ed', prereq:'ENG101',
+ why:"You'll present projects constantly from Semester 3 onward — this is where you learn not to freeze up.",
+ topics:['Structuring a presentation that lands','Public speaking and delivery technique','Designing slides as visual aids, not text dumps','Handling Q&A under pressure','Professional workplace communication']},
+{code:'CSSS1713', lab:null, title:'Calculus and Analytical Geometry', credits:3, sem:2, cluster:'theory-math', category:'math-sci', prereq:null,
+ why:"Feeds directly into algorithm complexity, graphics and machine learning math later.",
+ topics:['Limits and continuity','Derivatives and their applications','Integrals and area under curves','Coordinate geometry','Intro to sequences and series']},
+{code:'CSSS1853', lab:null, title:'Elementary Algebra', credits:3, sem:2, cluster:'theory-math', category:'math-sci', prereq:null,
+ why:"A math foundation or refresher, depending on your placement track.",
+ topics:['Equations and inequalities','Polynomials and factoring','Functions and graphing basics','Systems of equations']},
+
+// ---------------- SEMESTER 3 ----------------
+{code:'CSCP2023', lab:'CSCP2021', title:'Object Oriented Programming', credits:'3+1', sem:3, cluster:'prog-dev', category:'core', prereq:'CSCP1013',
+ why:"Every real-world codebase you'll touch as a developer is organized this way — 'thinking like a programmer' becomes 'thinking like a software engineer.'",
+ topics:['Classes, objects and constructors','Encapsulation and access control','Inheritance and polymorphism','Abstract classes and interfaces','Exception handling','A first taste of design patterns','Lab: building a multi-class application from scratch']},
+{code:'CSCS3543', lab:'CSCS3541', title:'Computer Organization and Assembly Language', credits:'3+1', sem:3, cluster:'sys-arch', category:'core', prereq:'CSCS2523',
+ why:"The last stop before things get abstract — after this you'll actually understand what a compiler is doing to your code.",
+ topics:['CPU architecture and the fetch-decode-execute cycle','Registers and the memory hierarchy (cache, RAM, disk)','Instruction sets and addressing modes','Writing and tracing simple assembly programs','How high-level code becomes machine instructions','Lab: hands-on assembly programming']},
+{code:'CSSS2733', lab:null, title:'Multivariate Calculus', credits:3, sem:3, cluster:'theory-math', category:'math-sci', prereq:'CSSS1713',
+ why:"Sets you up for machine learning math — gradient descent — two years from now.",
+ topics:['Partial derivatives','Multiple integrals','Vector calculus basics','Gradient and divergence intuition','Applications to optimization']},
+{code:'CSAL1213', lab:null, title:'Discrete Structure', credits:3, sem:3, cluster:'theory-math', category:'core', prereq:null,
+ why:"The mathematical language every algorithms and theory course after this will assume you already speak.",
+ topics:['Propositional and predicate logic','Set theory and functions','Relations and basic proof techniques','Combinatorics: counting and permutations','Intro to graph theory','Recursion and recurrence relations']},
+{code:'CSMG1923', lab:null, title:'Financial Accounting', credits:3, sem:3, cluster:'biz-prof', category:'supporting', prereq:null,
+ why:"Useful literacy for anyone who'll eventually price a product, run a startup, or manage a project budget.",
+ topics:['Basic accounting principles','Reading a balance sheet and income statement','The accounting cycle','Intro to budgeting']},
+{code:'CSMG1933', lab:null, title:'Introduction to Business', credits:3, sem:3, cluster:'biz-prof', category:'supporting', prereq:null,
+ why:"Context for the fact that most CS graduates end up building things inside a business, not writing code in isolation.",
+ topics:['Core business functions: marketing, operations, finance, HR','Organizational structures','Intro to strategy and competitive advantage','Short case studies of tech companies as businesses']},
+
+// ---------------- SEMESTER 4 ----------------
+{code:'CSCP2033', lab:'CSCP2031', title:'Data Structures & Algorithms', credits:'3+1', sem:4, cluster:'prog-dev', category:'core', prereq:'CSCP2023',
+ why:"Arguably the single most interview-relevant course in the degree — this is what technical interviews test.",
+ topics:['Arrays, linked lists, stacks and queues','Trees: binary trees, BSTs, balanced trees','Hashing and hash tables','Graphs and traversal: BFS and DFS','Recursion in real depth','Complexity trade-offs between structures','Lab: implementing every structure from scratch']},
+{code:'CSDB2313', lab:'CSDB2311', title:'Introduction to Database Systems', credits:'3+1', sem:4, cluster:'data-ai', category:'core', prereq:'CSCP1013',
+ why:"Nearly every application you'll ever build needs to store data somewhere — this is that 'somewhere.'",
+ topics:['The relational model and relational algebra basics','SQL: queries, joins, aggregation','Entity-relationship modeling','Normalization from 1NF to 3NF','Transactions and basic concurrency concepts','Lab: designing and querying a real database']},
+{code:'CSSS2743', lab:null, title:'Probability and Statistics', credits:3, sem:4, cluster:'theory-math', category:'math-sci', prereq:null,
+ why:"The statistical backbone for every AI, ML and data science course later in the degree.",
+ topics:['Probability rules and conditional probability','Random variables and common distributions','Expectation and variance','Basics of hypothesis testing','Intro to regression']},
+{code:'CSSS2753', lab:null, title:'Linear Algebra', credits:3, sem:4, cluster:'theory-math', category:'math-sci', prereq:null,
+ why:"Machine learning, computer graphics and image processing are all, underneath, linear algebra with a UI.",
+ topics:['Vectors and vector spaces','Matrices and matrix operations','Determinants and inverses','Eigenvalues and eigenvectors','Applications to transformations']},
+
+// ---------------- SEMESTER 5 ----------------
+{code:'CSCS3553', lab:'CSCS3551', title:'Operating Systems', credits:'3+1', sem:5, cluster:'sys-arch', category:'core', prereq:'CSCS3543',
+ why:"Explains the invisible referee running underneath every program on your laptop right now.",
+ topics:['Processes vs threads','CPU scheduling algorithms','Memory management and virtual memory','Deadlocks and synchronization: semaphores, mutexes','File systems','Intro to concurrency bugs like race conditions','Lab: OS-level programming exercises']},
+{code:'CSSE3113', lab:null, title:'Software Engineering I', credits:3, sem:5, cluster:'prog-dev', category:'core', prereq:'CSCP2023',
+ why:"The shift from 'writing a program' to 'building a maintainable product with a team' starts here.",
+ topics:['SDLC models: waterfall, agile, scrum','Requirements gathering and analysis','Software design principles','Intro to UML diagrams','Basic project planning and estimation','Version control practices']},
+{code:'CSAL3233', lab:null, title:'Design and Analysis of Algorithm', credits:3, sem:5, cluster:'theory-math', category:'core', prereq:'CSCP2033',
+ why:"This is where 'it works' becomes 'it works efficiently at scale' — the course most students cite as formative.",
+ topics:['Asymptotic analysis: Big-O and Big-Theta','Divide-and-conquer strategies','Greedy algorithms','Dynamic programming','Graph algorithms: shortest path, minimum spanning tree','A first look at NP-completeness']},
+{code:'CSSS2763', lab:null, title:'Differential Equation', credits:3, sem:5, cluster:'theory-math', category:'math-sci', prereq:'CSSS2733',
+ why:"Occasionally resurfaces in simulation, robotics and signal-processing-flavored electives.",
+ topics:['First-order and second-order ODEs','Standard solution methods','Applications to modeling real systems','Intro to systems of differential equations']},
+{code:'CSSE3143', lab:null, title:'Web Application Development', credits:3, sem:5, cluster:'web-mobile', category:'cs-elective', prereq:'CSCP2023',
+ why:"The most directly 'I can show my family what I built' course in the degree.",
+ topics:['HTML and CSS fundamentals','JavaScript basics and DOM manipulation','Client-server architecture','Intro to a backend framework','Connecting a web app to a database','Deploying a basic project']},
+{code:'CSCP3063', lab:null, title:'Mobile Application Development', credits:2, sem:5, cluster:'web-mobile', category:'cs-elective', prereq:'CSCP2023',
+ why:"For students who want their final year project to live on someone's phone, not just a server.",
+ topics:['Mobile app architecture basics','UI design for mobile: layouts and navigation','Working with device features like camera and storage','Intro to a mobile development framework','Basics of publishing an app']},
+{code:'CSSE4153', lab:null, title:'Human Computer Interaction', credits:3, sem:5, cluster:'web-mobile', category:'cs-elective', prereq:null,
+ why:"The course that explains why some apps feel effortless and others feel like homework.",
+ topics:['Usability principles and heuristics','Basic user research: interviews, personas','Wireframing and prototyping','Accessibility fundamentals','Evaluating interfaces through usability testing']},
+{code:'CSST3663', lab:null, title:'Microcontroller Programming and Interfacing', credits:3, sem:5, cluster:'sys-arch', category:'cs-elective', prereq:'CSCS2523',
+ why:"For students drawn to IoT, robotics and embedded-systems projects.",
+ topics:['Microcontroller architecture basics','Programming embedded input/output','Sensor and actuator interfacing','Intro to real-time constraints']},
+{code:'CSAL4323', lab:null, title:'3D Computer Graphics', credits:3, sem:5, cluster:'data-ai', category:'cs-elective', prereq:'CSSS2753',
+ why:"Where linear algebra visibly turns into pictures on a screen.",
+ topics:['Coordinate transformations and projections','Rendering pipeline basics','Lighting and shading models','Intro to a graphics API']},
+{code:'CSDS4423', lab:null, title:'Programming for Big Data', credits:4, sem:5, cluster:'data-ai', category:'cs-elective', prereq:'CSDB2313',
+ why:"A first taste of the tools behind 'data engineer' as a career path.",
+ topics:['Challenges unique to large-scale data','Intro to distributed data processing concepts','Working with a big-data framework at a beginner level','Basic data pipeline design']},
+{code:'CS4163', lab:null, title:'Computer Architecture', credits:3, sem:5, cluster:'sys-arch', category:'cs-elective', prereq:'CSCS3543',
+ why:"A deeper second pass at what Computer Organization introduced.",
+ topics:['Pipelining and instruction-level parallelism','Cache design in more depth','Memory system performance','Intro to multicore design trade-offs']},
+
+// ---------------- SEMESTER 6 ----------------
+{code:'CSAL3243', lab:'CSAL3241', title:'Artificial Intelligence', credits:'3+1', sem:6, cluster:'data-ai', category:'core', prereq:'CSCP2033',
+ why:"Your first structured exposure to how machines make decisions, before the ML-focused electives get specific.",
+ topics:['Search algorithms: BFS, DFS, A*','Knowledge representation basics','Intro to intelligent agents','Game-playing algorithms like minimax','Basic reasoning under uncertainty','Lab: implementing classic AI search problems']},
+{code:'CSNC2413', lab:'CSNC2411', title:'Computer Communications and Networks', credits:'3+1', sem:6, cluster:'net-sec', category:'core', prereq:'CSCS3553',
+ why:"Explains what actually happens between you hitting 'send' and a message arriving somewhere else in the world.",
+ topics:['The OSI and TCP/IP models','IP addressing and subnetting basics','Routing and switching fundamentals','Common protocols: HTTP, DNS, TCP/UDP','Intro to network security concepts','Lab: basic network configuration and packet analysis']},
+{code:'CSAL3253', lab:null, title:'Theory of Automata', credits:3, sem:6, cluster:'theory-math', category:'core', prereq:'CSAL1213',
+ why:"The famous 'why some problems can never be solved by any computer' course — theoretical, but it reframes how you think about programming.",
+ topics:['Finite automata: DFA and NFA','Regular expressions and regular languages','Context-free grammars and pushdown automata','Intro to Turing machines','The limits of computability']},
+{code:'CSHU2813', lab:null, title:'Technical and Report Writing', credits:3, sem:6, cluster:'gen-ed', category:'gen-ed', prereq:'ENG101',
+ why:"The skill that makes your final year project report — and every future work document — actually readable.",
+ topics:['Structuring a technical report','Writing clear documentation','Explaining technical processes to non-technical readers','Citation and referencing for technical work']},
+{code:'CSAL3283', lab:null, title:'Storytelling and Game Design', credits:1, sem:6, cluster:'web-mobile', category:'cs-elective', prereq:null,
+ why:"For students eyeing game development or interactive-media projects.",
+ topics:['Narrative structure in interactive media','Game mechanics and player experience basics','Level and progression design','Intro to working in a game engine']},
+{code:'CSDS4473', lab:null, title:'Big Data Analytics', credits:3, sem:6, cluster:'data-ai', category:'cs-elective', prereq:'CSDS4423',
+ why:"Bridges Programming for Big Data into actual insight-generation.",
+ topics:['Analytics on large datasets','Intro to data visualization for insight','Basic predictive analytics techniques','Tools for exploring big data']},
+{code:'CSAL3203', lab:null, title:'Introduction to Image Processing', credits:3, sem:6, cluster:'data-ai', category:'cs-elective', prereq:'CSSS2753',
+ why:"A stepping stone toward computer vision work.",
+ topics:['Digital image representation','Basic filtering and enhancement techniques','Edge detection basics','Intro to image transformations']},
+{code:'CSIP3113', lab:null, title:'Digital Signal Processing', credits:1, sem:6, cluster:'data-ai', category:'cs-elective', prereq:'CSSS2733',
+ why:"Underpins audio, communications and some signal-related ML applications.",
+ topics:['Signals and systems basics','Sampling and the Nyquist concept','Intro to Fourier analysis','Basic filter design']},
+{code:'CSAL3273M', lab:null, title:'Mathematics for Machine Learning', credits:2, sem:6, cluster:'theory-math', category:'cs-elective', prereq:'CSSS2753',
+ why:"The math prerequisite most students wish they'd taken before, not during, their first ML course.",
+ topics:['Linear algebra and calculus, refreshed for ML context','Optimization basics and gradient descent intuition','Probability concepts used in ML','Intro to loss functions']},
+{code:'CSAL3273W', lab:null, title:'Advanced Web Programming', credits:3, sem:6, cluster:'web-mobile', category:'cs-elective', prereq:'CSSE3143',
+ why:"A second, deeper pass at web development for students set on full-stack roles.",
+ topics:['Advanced frontend frameworks and patterns','API design and integration','Authentication and session handling','Performance and deployment considerations']},
+
+// ---------------- SEMESTER 7 ----------------
+{code:'CSO3001', lab:null, title:'Career Lab', credits:5, sem:7, cluster:'biz-prof', category:'supporting', prereq:null,
+ why:"The most direct 'get hired' course in the whole degree.",
+ topics:['Building a resume and LinkedIn profile that gets read','Mock technical interviews','Internship search strategy','Workplace professionalism and etiquette']},
+{code:'CSNC3413', lab:null, title:'Information Security', credits:4, sem:7, cluster:'net-sec', category:'core', prereq:'CSNC2413',
+ why:"Increasingly non-optional literacy for any developer shipping anything that touches the internet.",
+ topics:['Cryptography basics: symmetric and asymmetric encryption','Common attack types: phishing, injection, malware','Network and application security principles','Intro to security policy and risk assessment']},
+{code:'CSCS4573', lab:null, title:'Compiler Construction', credits:4, sem:7, cluster:'sys-arch', category:'core', prereq:'CSAL3253',
+ why:"Demystifies what 'compiling' actually means — and makes every future programming language feel less magical.",
+ topics:['Lexical analysis and tokenizing','Parsing and syntax trees','Semantic analysis basics','Intro to code generation and optimization']},
+{code:'CSAL4263', lab:null, title:'Numerical Computing', credits:4, sem:7, cluster:'theory-math', category:'core', prereq:'CSSS1713',
+ why:"The math you use when an equation can't be solved neatly by hand and has to be approximated by code.",
+ topics:['Numerical methods for root-finding and equation solving','Numerical integration and differentiation','Error analysis','Intro to solving linear systems computationally']},
+{code:'CSSE4173', lab:null, title:'Final Year Project I', credits:1, sem:7, cluster:'prog-dev', category:'core', prereq:'CSSE3113',
+ why:"The first half of the project that will define your final-year experience and your first portfolio piece.",
+ topics:['Writing a proposal and scoping a real project','Literature and technology review','System design and architecture planning','Initial implementation and progress milestones','Working with a supervisor and defending your proposal']},
+{code:'CSMG3943', lab:null, title:'Organizational Behavior and Culture', credits:2, sem:7, cluster:'biz-prof', category:'cs-elective', prereq:null,
+ why:"For students headed into team-lead or people-facing tech roles.",
+ topics:['Workplace motivation and team dynamics','Leadership styles','Organizational culture basics','Managing change within teams']},
+{code:'CSMG2913', lab:null, title:'Technology Entrepreneurship', credits:2, sem:7, cluster:'biz-prof', category:'cs-elective', prereq:'ENT101',
+ why:"For students planning to build their own product rather than join one.",
+ topics:['Tech startup fundamentals','Finding product-market fit','Pitching to investors','Intro to intellectual property for tech products']},
+{code:'CSGE4963D', lab:null, title:'Intro to Data Science', credits:2, sem:7, cluster:'data-ai', category:'cs-elective', prereq:'CSSS2743',
+ why:"A practical, workflow-first companion to the more theory-heavy AI and ML courses.",
+ topics:['The data science workflow: collect, clean, analyze, communicate','Exploratory data analysis','Basic predictive modeling','Communicating results to non-technical stakeholders']},
+{code:'CSCS4583', lab:null, title:'Digital Forensics', credits:2, sem:7, cluster:'net-sec', category:'cs-elective', prereq:'CSNC3413',
+ why:"For students drawn to the investigative side of security.",
+ topics:['Evidence collection and chain of custody basics','File system and data recovery fundamentals','Intro to forensic tools','Legal and ethical considerations']},
+
+// ---------------- SEMESTER 8 ----------------
+{code:'CSGE4963', lab:null, title:'Professional Practices', credits:7, sem:8, cluster:'biz-prof', category:'core', prereq:null,
+ why:"The 'here's how not to get yourself or your company in trouble' course.",
+ topics:['Professional ethics and codes of conduct','Intellectual property basics','Workplace responsibility and accountability','Case studies of ethical dilemmas in tech']},
+{code:'CSSE4183', lab:null, title:'Final Year Project II', credits:1, sem:8, cluster:'prog-dev', category:'core', prereq:'CSSE4173',
+ why:"Where the project you scoped in FYP I becomes a finished, demoable piece of work — the centerpiece of your portfolio.",
+ topics:['Completing the implementation','Testing and validating the system','Writing the final project report','Preparing and delivering the final defense and demo']},
+{code:'CSCS2543', lab:null, title:'Parallel And Distributed Computing', credits:7, sem:8, cluster:'sys-arch', category:'core', prereq:'CSCS3553',
+ why:"As multicore and cloud become the default, this explains how to actually use all those cores.",
+ topics:['Parallel algorithm design basics','Shared memory vs distributed memory models','Intro to multithreading in practice','Basic distributed systems concepts: consistency, fault tolerance']},
+{code:'CSAL4243', lab:null, title:'Introduction to Machine Learning', credits:3, sem:8, cluster:'data-ai', category:'core', prereq:'CSAL3243', prereq2:'CSSS2743',
+ why:"The course most students arrive at UCP specifically hoping to take.",
+ topics:['Supervised learning: regression and classification','Unsupervised learning basics: clustering','Model evaluation and overfitting','A few core algorithms: decision trees, k-NN','Basic hands-on model building']},
+{code:'CSSE4123', lab:null, title:'Software Quality Assurance', credits:2, sem:8, cluster:'prog-dev', category:'core', prereq:'CSSE3113',
+ why:"The discipline that separates 'it works on my machine' from 'it works, period.'",
+ topics:['Quality models and metrics','QA processes across the SDLC','Code review practices','Intro to test planning']},
+{code:'CSSE4193', lab:null, title:'Software Testing', credits:2, sem:8, cluster:'prog-dev', category:'core', prereq:'CSSE3113',
+ why:"Pairs directly with QA — this is the hands-on half.",
+ topics:['Test case design techniques','Unit, integration and system testing','Intro to test automation','Bug tracking and reporting']},
+{code:'CSMG4913', lab:null, title:'Fundamentals of Enterprise Resource Planning', credits:3, sem:8, cluster:'biz-prof', category:'cs-elective', prereq:'CSMG1933',
+ why:"Relevant if you end up working with the software that runs the back office of large companies.",
+ topics:['What an ERP system does','Core ERP modules: finance, HR, supply chain','Intro to implementing and configuring an ERP','Case studies of ERP adoption']},
+{code:'CSHU3873', lab:null, title:'Speak Well – English Conversation', credits:2, sem:8, cluster:'gen-ed', category:'gen-ed', prereq:null,
+ why:"A practical polish course before you walk into interviews.",
+ topics:['Conversational fluency practice','Workplace small talk and interview conversation','Pronunciation and confidence building']},
+{code:'CSHU4213', lab:null, title:'Business Law', credits:2, sem:8, cluster:'biz-prof', category:'cs-elective', prereq:null,
+ why:"The legal literacy every founder or freelance developer eventually needs.",
+ topics:['Contract law basics','Intellectual property and software licensing','Employment law basics','Intro to cyber law']},
+{code:'CSMG2943', lab:null, title:'The Aesthetic Approach', credits:2, sem:8, cluster:'gen-ed', category:'gen-ed', prereq:null,
+ why:"A left-field humanities elective that quietly improves your design sense.",
+ topics:['Principles of aesthetics and design appreciation','Visual and art literacy','Applying aesthetic judgment to everyday work']},
+];
+
+COURSES.forEach(c => c._id = nid());
+const COURSE_BY_CODE = Object.fromEntries(COURSES.map(c=>[c.code, c]));
+const SEMESTERS = [1,2,3,4,5,6,7,8];
+const reduceMotion = (typeof window.matchMedia === 'function') && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// The four Sem-1 university elective options are one requirement, not four —
+// collapse them into a single synthetic card in every listing view. The
+// individual options remain fully intact in COURSES / the comparison section.
+const UNI_ELECTIVE_OPTIONS = COURSES.filter(c=>c.category==='uni-elective');
+const UNI_ELECTIVE_GROUP = {
+  _id:'uni-elective-group',
+  isGroup:true,
+  code: UNI_ELECTIVE_OPTIONS.map(c=>c.code).join(' / '),
+  lab:null,
+  title:'University Elective',
+  credits:3,
+  sem:1,
+  cluster:'gen-ed',
+  category:'uni-elective',
+  prereq:null,
+  why:"Pick one social-science lens: people, politics, psychology, or global affairs. Compare all four below.",
+  topics:[],
+};
+function baseCourseList(){
+  return [...COURSES.filter(c=>c.category!=='uni-elective'), UNI_ELECTIVE_GROUP];
+}
+
+function totalCredits(c){
+  if (typeof c.credits === 'string'){
+    const [t,l] = c.credits.split('+').map(Number);
+    return t + (l||0);
+  }
+  return c.credits;
+}
+
+/* =========================================================
+   STATE
+   ========================================================= */
+const state = {
+  search:'',
+  cluster:null,
+  semester:1,
+  category:null,
+  openCards:new Set(),
+};
+
+/* =========================================================
+   LOADER — builds the 8-semester stepper live, then reveals
+   the page. Tap anywhere to skip. Respects reduced-motion.
+   ========================================================= */
+function runLoader(){
+  const loader = document.getElementById('loader');
+  const dotsEl = document.getElementById('loaderSteps');
+  const caption = document.getElementById('loaderCaption');
+
+  const finish = () => {
+    loader.classList.add('hide');
+    document.body.style.overflow = '';
+    runLoad();
+  };
+
+  if (reduceMotion){
+    loader.style.display = 'none';
+    runLoad();
+    return;
+  }
+
+  document.body.style.overflow = 'hidden';
+  dotsEl.innerHTML = SEMESTERS.map(s=>`<div class="loader-dot" data-sem="${s}">${s}</div>`).join('');
+  const dots = Array.from(dotsEl.children);
+  let i = 0;
+  const step = () => {
+    if (i >= dots.length){
+      caption.textContent = 'Ready.';
+      setTimeout(finish, 350);
+      return;
+    }
+    dots[i].classList.add('filled');
+    if (i === dots.length-1) dots[i].classList.add('last');
+    caption.textContent = `Mapping Semester ${i+1}...`;
+    i++;
+    setTimeout(step, 140);
+  };
+  setTimeout(step, 200);
+
+  loader.addEventListener('click', finish, {once:true});
+  setTimeout(finish, 2400); // safety cap
+}
+
+/* =========================================================
+   HERO PROGRESS (subtle secondary detail)
+   ========================================================= */
+function runLoad(){
+  if (reduceMotion){ document.getElementById('heroProgress').style.width='18%'; return; }
+  requestAnimationFrame(()=>{ document.getElementById('heroProgress').style.width = '18%'; });
+}
+
+/* =========================================================
+   STATS
+   ========================================================= */
+function renderStats(){
+  const stats = [
+    {num:'132', lbl:'Total credit hours'},
+    {num:'8', lbl:'Semesters'},
+    {num:'4 yrs', lbl:'Degree duration'},
+    {num:'1 click', lbl:'To open any course'},
+  ];
+  document.getElementById('statsRow').innerHTML = stats.map(s=>`
+    <div class="stat"><div class="num">${s.num}</div><div class="lbl">${s.lbl}</div></div>
+  `).join('');
+}
+
+/* =========================================================
+   CATEGORY CHIPS
+   ========================================================= */
+function renderCategoryChips(){
+  const el = document.getElementById('categoryChips');
+  const allActive = state.category===null;
+  let html = `<button class="chip ${allActive?'active':''}" data-cat="__all__">All</button>`;
+  html += CATEGORIES.map(cat=>{
+    const active = state.category===cat.id;
+    return `<button class="chip ${active?'active':''}" data-cat="${cat.id}"><span class="dot" style="background:${cat.fg}"></span>${cat.label}</button>`;
+  }).join('');
+  el.innerHTML = html;
+  el.querySelectorAll('.chip').forEach(chip=>{
+    chip.addEventListener('click', ()=>{
+      const id = chip.getAttribute('data-cat');
+      state.category = (id==='__all__') ? null : id;
+      renderAll();
+    });
+  });
+}
+
+/* =========================================================
+   CLUSTER CHIPS (global browse)
+   ========================================================= */
+function renderClusterChips(){
+  const el = document.getElementById('clusterChips');
+  el.innerHTML = CLUSTERS.map(cl=>{
+    const count = COURSES.filter(c=>c.cluster===cl.id).length;
+    const active = state.cluster===cl.id;
+    return `<button class="chip chip-sm ${active?'active':''}" data-cluster="${cl.id}">
+      <span class="dot" style="background:${cl.hex}"></span>${cl.name} <span class="mono" style="opacity:.6;font-size:0.72rem;">${count}</span>
+    </button>`;
+  }).join('');
+  el.querySelectorAll('.chip').forEach(chip=>{
+    chip.addEventListener('click', ()=>{
+      const id = chip.getAttribute('data-cluster');
+      state.search=''; document.getElementById('searchInput').value=''; document.getElementById('searchClearBtn').style.display='none';
+      state.cluster = (state.cluster===id) ? null : id;
+      renderAll();
+    });
+  });
+}
+
+/* =========================================================
+   SEMESTER STEPPER
+   ========================================================= */
+function renderStepper(){
+  const el = document.getElementById('stepper');
+  el.innerHTML = SEMESTERS.map(sem=>{
+    const year = Math.ceil(sem/2);
+    const active = (!state.search && !state.cluster && state.semester===sem);
+    return `<div class="step ${active?'active':''}" data-sem="${sem}">
+      <div class="step-line"></div>
+      <div class="step-circle">${sem}</div>
+      <div class="step-label">SEM ${sem}</div>
+      <div class="step-year">YEAR ${year}</div>
+    </div>`;
+  }).join('');
+  el.querySelectorAll('.step').forEach(step=>{
+    step.addEventListener('click', ()=>{
+      state.semester = Number(step.getAttribute('data-sem'));
+      state.search=''; document.getElementById('searchInput').value=''; document.getElementById('searchClearBtn').style.display='none';
+      state.cluster=null;
+      renderAll();
+    });
+  });
+}
+
+/* =========================================================
+   SEARCH + RESULTS
+   ========================================================= */
+function matchesCategory(c){
+  return !state.category || c.category===state.category;
+}
+function matchesSearch(c, q){
+  const haystack = [c.title, c.code, c.lab||'', CLUSTER_MAP[c.cluster].name, CAT_MAP[c.category].label, c.why, c.topics.join(' ')].join(' ').toLowerCase();
+  return haystack.includes(q.toLowerCase());
+}
+
+function getVisible(){
+  const pool = baseCourseList();
+  if (state.search){
+    return pool.filter(c => matchesSearch(c, state.search) && matchesCategory(c));
+  }
+  if (state.cluster){
+    return pool.filter(c => c.cluster===state.cluster && matchesCategory(c));
+  }
+  return pool.filter(c => c.sem===state.semester && matchesCategory(c));
+}
+
+function courseCardHTML(c){
+  const cl = CLUSTER_MAP[c.cluster];
+  const cat = CAT_MAP[c.category];
+  const open = state.openCards.has(c._id);
+
+  if (c.isGroup){
+    return `
+    <div class="course-card" data-id="${c._id}" data-group="1">
+      <div class="course-card-head">
+        <span class="course-code">${c.code}</span>
+        <span class="credit-label">${c.credits} CR</span>
+      </div>
+      <div class="course-title">${c.title}</div>
+      <span class="cat-pill" style="background:${cat.bg};color:${cat.fg}">${cat.label.toUpperCase()}</span>
+      <div class="course-teaser">${c.why}</div>
+      <div class="card-foot">
+        <span class="expand-hint">Compare the 4 options <svg width="10" height="10" viewBox="0 0 14 14" fill="none"><path d="M5 2.5L9.5 7L5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </div>
+    </div>`;
+  }
+
+  const prereqs = [c.prereq, c.prereq2].filter(Boolean);
+  let theoryLab = '';
+  if (typeof c.credits === 'string'){
+    const [t,l] = c.credits.split('+');
+    theoryLab = `<span class="credit-chip"><b>${t}</b> theory</span><span class="credit-chip"><b>${l}</b> lab</span>`;
+  } else {
+    theoryLab = `<span class="credit-chip"><b>${c.credits}</b> theory</span>`;
+  }
+  return `
+  <div class="course-card ${open?'open':''}" style="--card-color:${cl.hex}" data-id="${c._id}" id="card-${c.code}">
+    <div class="course-card-head">
+      <span class="course-code">${c.code}${c.lab ? ' / '+c.lab : ''}</span>
+      <span class="credit-label">${totalCredits(c)} CR</span>
+    </div>
+    <div class="course-title">${c.title}</div>
+    <span class="cat-pill" style="background:${cat.bg};color:${cat.fg}">${cat.label.toUpperCase()}</span>
+    <div class="course-teaser">${c.why}</div>
+    <div class="card-foot">
+      <span class="expand-hint">${open?'Hide details':'See full outline'} <svg width="10" height="10" viewBox="0 0 14 14" fill="none"><path d="M5 2.5L9.5 7L5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </div>
+    <div class="course-body">
+      <div class="course-body-inner">
+        <div class="course-body-content">
+          <div class="credit-breakdown">${theoryLab}<span class="credit-chip"><b>Semester ${c.sem}</b></span><span class="credit-chip" style="color:${cl.hex};border-color:${cl.hex}55"><b>${cl.name}</b></span></div>
+          <div class="topics-label">What you'll actually study</div>
+          <ul class="topics-list">${c.topics.map(t=>`<li>${t}</li>`).join('')}</ul>
+          <div class="prereq-row">
+            <span class="plabel">Prerequisite:</span>
+            ${prereqs.length ? prereqs.map(p=>`<span class="prereq-chip" data-jump="${p}">${p}${COURSE_BY_CODE[p]?': '+COURSE_BY_CODE[p].title:''}</span>`).join('') : '<span class="no-prereq">None</span>'}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function wireCourseCards(container){
+  container.querySelectorAll('.course-card').forEach(card=>{
+    card.addEventListener('click', (e)=>{
+      if (e.target.closest('.prereq-chip')) return;
+      if (card.getAttribute('data-group')){
+        document.getElementById('electiveSection').scrollIntoView({behavior:'smooth', block:'start'});
+        return;
+      }
+      const id = card.getAttribute('data-id');
+      if (state.openCards.has(id)) state.openCards.delete(id); else state.openCards.add(id);
+      renderResults();
+    });
+  });
+  container.querySelectorAll('.prereq-chip').forEach(chip=>{
+    chip.addEventListener('click', e=>{
+      e.stopPropagation();
+      const code = chip.getAttribute('data-jump');
+      const target = COURSE_BY_CODE[code];
+      if (!target) return;
+      state.search=''; document.getElementById('searchInput').value=''; document.getElementById('searchClearBtn').style.display='none';
+      state.cluster=null; state.category=null; state.semester=target.sem;
+      state.openCards.add(target._id);
+      renderAll();
+      requestAnimationFrame(()=>{
+        const el = document.getElementById('card-'+code);
+        if (el && el.scrollIntoView) el.scrollIntoView({behavior:'smooth', block:'center'});
+      });
+    });
+  });
+}
+
+function renderResults(){
+  const visible = getVisible();
+  const browseControls = document.getElementById('browseControls');
+  const stepperWrap = document.getElementById('stepperWrap');
+  const resultsSection = document.getElementById('resultsSection');
+  const searchPanel = document.getElementById('searchResultsPanel');
+
+  if (state.search){
+    // SEARCH MODE — results render immediately below the search box;
+    // the browse chrome (chips/cluster/stepper/default section) hides
+    // so nothing pushes results out of view, especially on mobile.
+    browseControls.style.display = 'none';
+    stepperWrap.style.display = 'none';
+    resultsSection.style.display = 'none';
+    searchPanel.style.display = 'block';
+
+    const heading = document.getElementById('searchHeading');
+    const sub = document.getElementById('searchSub');
+    const countBadge = document.getElementById('searchCountBadge');
+    const container = document.getElementById('searchResultsContainer');
+
+    heading.textContent = `Results for "${state.search}"`;
+    sub.textContent = 'Matching courses across all 8 semesters.';
+    countBadge.textContent = `${visible.length} COURSE${visible.length===1?'':'S'} SHOWN`;
+
+    if (visible.length === 0){
+      container.innerHTML = `<div class="empty-state"><strong>Nothing matches that.</strong>Try a different course name, code, or topic.</div>`;
+      return;
+    }
+    container.innerHTML = visible.map(c=>courseCardHTML(c)).join('');
+    wireCourseCards(container);
+    return;
+  }
+
+  // BROWSE MODE — normal semester / cluster / category browsing.
+  browseControls.style.display = '';
+  stepperWrap.style.display = '';
+  resultsSection.style.display = '';
+  searchPanel.style.display = 'none';
+
+  const container = document.getElementById('resultsContainer');
+  const heading = document.getElementById('resultsHeading');
+  const sub = document.getElementById('resultsSub');
+  const countBadge = document.getElementById('countBadge');
+
+  if (state.cluster){
+    heading.textContent = CLUSTER_MAP[state.cluster].name;
+    sub.textContent = 'Every course in this cluster, across all 8 semesters.';
+  } else {
+    heading.textContent = `Semester ${state.semester}`;
+    sub.textContent = SEM_SUBTITLES[state.semester] || '';
+  }
+  countBadge.textContent = `${visible.length} COURSE${visible.length===1?'':'S'} SHOWN`;
+
+  if (visible.length === 0){
+    container.innerHTML = `<div class="empty-state"><strong>Nothing matches that.</strong>Try a different course name, code, topic, or clear a filter above.</div>`;
+    return;
+  }
+
+  container.innerHTML = visible.map(c=>courseCardHTML(c)).join('');
+  wireCourseCards(container);
+}
+
+/* =========================================================
+   PREREQUISITE CHAINS — click a node to mark it "done" and
+   see what unlocks next. Codes are pulled from real prereq
+   links already present in COURSES.
+   ========================================================= */
+const CHAIN_PATHS = [
+  {label:'PROGRAMMING PATH', codes:['CSCS1513','CSCP1013','CSCP2023','CSCP2033','CSAL3233']},
+  {label:'SYSTEMS PATH', codes:['CSSS1723','CSCS2523','CSCS3543','CSCS3553','CSCS2543']},
+  {label:'THEORY PATH', codes:['CSAL1213','CSAL3253','CSCS4573']},
+  {label:'AI & ML PATH', codes:['CSCP2033','CSAL3243','CSAL4243']},
+  {label:'NETWORKS & SECURITY PATH', codes:['CSCS3553','CSNC2413','CSNC3413','CSCS4583']},
+  {label:'MATH PATH', codes:['CSSS1713','CSSS2733','CSSS2763']},
+  {label:'CAPSTONE PATH', codes:['CSCP2023','CSSE3113','CSSE4173','CSSE4183']},
+].map(p => ({...p, codes: p.codes.filter(c=>COURSE_BY_CODE[c])}))
+ .filter(p => p.codes.length > 1);
+
+const chainProgress = {}; // pathIndex -> completed index (-1 = none done)
+CHAIN_PATHS.forEach((_,i)=> chainProgress[i] = -1);
+
+function renderChains(){
+  const container = document.getElementById('chainContainer');
+  container.innerHTML = CHAIN_PATHS.map((path, pi)=>{
+    const progress = chainProgress[pi];
+    const nodes = path.codes.map((code, ni)=>{
+      const course = COURSE_BY_CODE[code];
+      let state = 'locked';
+      if (ni <= progress) state = 'done';
+      else if (ni === progress+1) state = 'next';
+      const arrow = ni>0 ? `<svg class="chain-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7H12M12 7L8 3M12 7L8 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>` : '';
+      return `${arrow}<div class="chain-node ${state}" data-path="${pi}" data-idx="${ni}" title="${course.title}">
+        <span class="badge">${state==='done' ? '✓' : (ni+1)}</span>
+        <span class="label">${course.title}</span>
+      </div>`;
+    }).join('');
+    const nextCourse = progress+1 < path.codes.length ? COURSE_BY_CODE[path.codes[progress+1]] : null;
+    const hint = progress === path.codes.length-1
+      ? `<span class="chain-hint">chain complete</span>`
+      : (progress >= 0 ? `<span class="chain-hint">unlocks: ${nextCourse.title}</span>` : '');
+    return `<div class="chain-path">
+      <div class="chain-path-label">${path.label}${hint}</div>
+      <div class="chain-row">${nodes}</div>
+    </div>`;
+  }).join('');
+
+  container.querySelectorAll('.chain-node').forEach(node=>{
+    node.addEventListener('click', ()=>{
+      const pi = Number(node.getAttribute('data-path'));
+      const ni = Number(node.getAttribute('data-idx'));
+      // clicking the current "done" head un-does it; clicking anywhere at/before next completes up to there
+      chainProgress[pi] = (chainProgress[pi] === ni) ? ni-1 : ni;
+      renderChains();
+    });
+  });
+}
+
+/* =========================================================
+   ELECTIVE COMPARISON (University Elective — pick 1 of 4)
+   CS ELECTIVE MENU — both clickable accordions, same pattern
+   as the main course cards.
+   ========================================================= */
+const openElectives = new Set();
+
+function electiveCardHTML(c, extra){
+  const open = openElectives.has(c._id);
+  const credits = totalCredits(c);
+  return `
+  <div class="elective-card ${open?'open':''}" data-id="${c._id}">
+    <span class="code">${c.code}${c.lab?' / '+c.lab:''}</span>
+    <h4>${c.title}</h4>
+    <div class="desc">${c.why}</div>
+    ${extra||''}
+    <div class="elective-card-meta">
+      <span class="elective-credit-tag">${credits} CREDIT EXAMPLE</span>
+      <span class="elective-toggle">${open?'HIDE OUTLINE':'SHOW OUTLINE'} <svg width="9" height="9" viewBox="0 0 14 14" fill="none"><path d="M5 2.5L9.5 7L5 11.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </div>
+    <div class="elective-body">
+      <div class="elective-body-inner">
+        <div class="elective-body-content">
+          <div class="elective-topics-label">Main topics</div>
+          <ul>${c.topics.map(t=>`<li>${t}</li>`).join('')}</ul>
+          <div class="elective-availability">Availability and exact syllabus can vary by semester.</div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function wireElectiveCards(container){
+  container.querySelectorAll('.elective-card').forEach(card=>{
+    card.addEventListener('click', ()=>{
+      const id = card.getAttribute('data-id');
+      if (openElectives.has(id)) openElectives.delete(id); else openElectives.add(id);
+      renderElectiveComparison();
+      renderCSElectiveMenu();
+    });
+  });
+}
+
+function renderElectiveComparison(){
+  const grid = document.getElementById('electiveGrid');
+  const electives = COURSES.filter(c=>c.category==='uni-elective');
+  grid.innerHTML = electives.map(c=>electiveCardHTML(c)).join('');
+  wireElectiveCards(grid);
+}
+
+function renderCSElectiveMenu(){
+  const grid = document.getElementById('csElectiveGrid');
+  const electives = COURSES.filter(c=>c.category==='cs-elective').sort((a,b)=>a.sem-b.sem);
+
+  const groups = {};
+  electives.forEach(c=>{ (groups[c.cluster] = groups[c.cluster]||[]).push(c); });
+
+  grid.innerHTML = CLUSTERS.filter(cl=>groups[cl.id]).map(cl=>{
+    const list = groups[cl.id];
+    return `
+    <div class="cse-group">
+      <button class="cse-group-toggle" data-cluster="${cl.id}">
+        <span class="cse-group-title"><span class="dot" style="background:${cl.hex}"></span>${cl.name} <span class="cse-group-count">${list.length}</span></span>
+        <svg width="10" height="10" viewBox="0 0 14 14" fill="none"><path d="M3 5.5L7 9.5L11 5.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="cse-group-collapse">
+        <div class="elective-grid cse-inner-grid">
+          ${list.map(c=>{
+            const extra = `<span class="sem-tag" style="color:${cl.hex}">Usually Semester ${c.sem}</span>`;
+            return electiveCardHTML(c, extra);
+          }).join('')}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  wireElectiveCards(grid);
+  grid.querySelectorAll('.cse-group-toggle').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      btn.closest('.cse-group').classList.toggle('expanded');
+    });
+  });
+}
+
+/* =========================================================
+   WIRE-UP
+   ========================================================= */
+document.getElementById('searchInput').addEventListener('input', e=>{
+  state.search = e.target.value.trim();
+  document.getElementById('searchClearBtn').style.display = state.search ? 'flex' : 'none';
+  renderAll();
+});
+document.getElementById('searchClearBtn').addEventListener('click', ()=>{
+  state.search='';
+  const input = document.getElementById('searchInput');
+  input.value='';
+  document.getElementById('searchClearBtn').style.display='none';
+  input.focus();
+  renderAll();
+});
+document.getElementById('clusterToggle').addEventListener('click', ()=>{
+  document.getElementById('clusterRow').classList.toggle('expanded');
+});
+
+function renderAll(){
+  renderCategoryChips();
+  renderClusterChips();
+  renderStepper();
+  renderResults();
+}
+
+document.getElementById('aboutNavBtn').addEventListener('click', ()=>{
+  const section = document.getElementById('aboutSection');
+  if (section.scrollIntoView) section.scrollIntoView({behavior:'smooth', block:'start'});
+  const card = document.querySelector('.disclaimer-card');
+  if (card){
+    card.classList.remove('flash-highlight');
+    void card.offsetWidth; // restart animation
+    card.classList.add('flash-highlight');
+  }
+});
+
+renderStats();
+renderElectiveComparison();
+renderCSElectiveMenu();
+renderChains();
+renderAll();
+runLoader();
+</script>
+</body>
+</html>
