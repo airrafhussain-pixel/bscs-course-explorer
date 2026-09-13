@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UCP / BSCS — What Will I Actually Study?</title>
+<title>UCP / BSCS: What Will I Actually Study?</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -453,8 +453,8 @@
   }
 
   /* ================= CS ELECTIVE GROUPS (collapsible by cluster) ================= */
-  .cse-group{border:1px solid var(--border);border-radius:var(--radius-m);background:var(--surface);margin-bottom:12px;overflow:hidden;}
-  .cse-group:last-child{margin-bottom:0;}
+  .cse-groups-list{display:flex;flex-direction:column;gap:12px;}
+  .cse-group{border:1px solid var(--border);border-radius:var(--radius-m);background:var(--surface);overflow:hidden;}
   .cse-group-toggle{
     width:100%;display:flex;align-items:center;justify-content:space-between;
     padding:16px 18px;background:none;border:none;cursor:pointer;text-align:left;
@@ -464,8 +464,9 @@
   .cse-group-count{font-family:'IBM Plex Mono',monospace;font-size:0.76rem;color:var(--muted);font-weight:400;}
   .cse-group-toggle svg{color:var(--muted);transition:transform 0.2s ease;flex:none;}
   .cse-group.expanded .cse-group-toggle svg{transform:rotate(180deg);}
-  .cse-group-collapse{max-height:0;overflow:hidden;transition:max-height 0.35s var(--ease);}
-  .cse-group.expanded .cse-group-collapse{max-height:2400px;}
+  .cse-group-collapse{display:grid;grid-template-rows:0fr;transition:grid-template-rows 0.35s var(--ease);}
+  .cse-group.expanded .cse-group-collapse{grid-template-rows:1fr;}
+  .cse-group-collapse-inner{overflow:hidden;}
   .cse-inner-grid{padding:0 18px 18px;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));}
 
   @media (max-width:760px){
@@ -596,7 +597,7 @@
     <div class="section-heading-row">
       <div>
         <h2>What unlocks what</h2>
-        <div class="subtitle">Click a course to mark it done and see what it unlocks next. A simplified view of the degree's real prerequisite chains — check each course's own outline for its full requirements.</div>
+        <div class="subtitle">Click a course to mark it done and see what it unlocks next. A simplified view of the degree's real prerequisite chains, so check each course's own outline for its full requirements.</div>
       </div>
     </div>
     <div id="chainContainer"></div>
@@ -608,7 +609,7 @@
     <div class="section-heading-row">
       <div>
         <span class="section-eyebrow-tag" style="background:var(--cat-uni-bg);color:var(--cat-uni-fg)">UNIVERSITY ELECTIVE</span>
-        <h2>University Elective — pick 1 of 4</h2>
+        <h2>University Elective: pick 1 of 4</h2>
         <div class="subtitle">A single Semester 1–2 general-education requirement. Every BSCS student takes exactly one of these. Compared side by side instead of four separate pages.</div>
       </div>
     </div>
@@ -622,10 +623,10 @@
       <div>
         <span class="section-eyebrow-tag" style="background:var(--cat-cse-bg);color:var(--cat-cse-fg)">CS ELECTIVE</span>
         <h2>CS Elective menu</h2>
-        <div class="subtitle">Technical electives you'll choose from repeatedly, mostly in Semesters 5–8. This is the full pool — exactly which ones run, and in which semester, depends on your intake year and what UCP schedules that term.</div>
+        <div class="subtitle">Technical electives you'll choose from repeatedly, mostly in Semesters 5–8. This is the full pool. Exactly which ones run, and in which semester, depends on your intake year and what UCP schedules that term.</div>
       </div>
     </div>
-    <div class="elective-grid" id="csElectiveGrid"></div>
+    <div class="cse-groups-list" id="csElectiveGrid"></div>
   </div>
 </section>
 
@@ -640,12 +641,12 @@
     <div class="about-grid">
       <div class="about-card">
         <h4>Why this exists</h4>
-        <p>Googling a course name usually returns an MIT- or Stanford-depth syllabus that has nothing to do with what gets taught in a single semester at UCP. This is a plain-language map of the actual BS Computer Science degree — what each course covers, how many credit hours it carries, and what it requires before you can take it — built so you can decide on a semester or an elective in a few minutes instead of digging through PDFs.</p>
+        <p>Googling a course name usually returns an MIT- or Stanford-depth syllabus that has nothing to do with what gets taught in a single semester at UCP. This is a plain-language map of the actual BS Computer Science degree: what each course covers, how many credit hours it carries, and what it requires before you can take it. Built so you can decide on a semester or an elective in a few minutes instead of digging through PDFs.</p>
       </div>
       <div class="about-card disclaimer-card">
         <h4>⚠ Disclaimer</h4>
         <p>This is <strong>not an official University of Central Punjab website</strong> and isn't published or endorsed by UCP. It's a student-made reference built from UCP's public scheme-of-studies and course-offering documents.</p>
-        <p>Course structures, prerequisites, credit hours, and — especially — which electives are offered in a given semester all change between intakes and academic years. Always confirm current requirements with your academic advisor or UCP's official student portal before making enrollment decisions.</p>
+        <p>Course structures, prerequisites, credit hours, and (especially) which electives are offered in a given semester all change between intakes and academic years. Always confirm current requirements with your academic advisor or UCP's official student portal before making enrollment decisions.</p>
       </div>
     </div>
   </div>
@@ -654,7 +655,7 @@
 <footer>
   <div class="wrap">
     <div><strong>UCP BSCS Course Outline Explorer</strong><br>A student-made reference, not an official UCP publication.</div>
-    <div style="max-width:52ch;">Course structure is based on UCP's official BS(CS) scheme of studies and course-offering records. UCP revises curricula periodically — always confirm specific electives, prerequisites, and current offerings with your academic advisor or the official UCP student portal before finalizing enrollment.</div>
+    <div style="max-width:52ch;">Course structure is based on UCP's official BS(CS) scheme of studies and course-offering records. UCP revises curricula periodically, so always confirm specific electives, prerequisites, and current offerings with your academic advisor or the official UCP student portal before finalizing enrollment.</div>
   </div>
 </footer>
 
@@ -701,8 +702,8 @@ const nid = () => 'c' + (_id++);
 const COURSES = [
 // ---------------- SEMESTER 1 ----------------
 {code:'CSCS1513', lab:'CSCS1511', title:'Introduction to Computing', credits:'3+1', sem:1, cluster:'prog-dev', category:'core', prereq:null,
- why:"This sets the vocabulary you'll use for the next four years — CPU, RAM, OS, protocol — before you touch a single line of real code.",
- topics:['Binary and number systems, and how data is represented digitally','How CPU, memory and storage fit together at a conceptual level','Operating systems from a user\'s view: files, folders, processes','How the internet moves data — IP addresses, browsers, servers','First exposure to logical thinking through flowcharts and pseudocode','Basic digital citizenship and cybersecurity hygiene','Lab: hands-on OS navigation, productivity tools, a first simple web page']},
+ why:"This sets the vocabulary you'll use for the next four years: CPU, RAM, OS, protocol, before you touch a single line of real code.",
+ topics:['Binary and number systems, and how data is represented digitally','How CPU, memory and storage fit together at a conceptual level','Operating systems from a user\'s view: files, folders, processes','How the internet moves data, from IP addresses to browsers and servers','First exposure to logical thinking through flowcharts and pseudocode','Basic digital citizenship and cybersecurity hygiene','Lab: hands-on OS navigation, productivity tools, a first simple web page']},
 {code:'CSSS1723', lab:null, title:'Basic Electronics', credits:3, sem:1, cluster:'sys-arch', category:'math-sci', prereq:null,
  why:"The hardware layer under every program you'll ever write starts here.",
  topics:['Voltage, current, resistance and Ohm\u2019s law','Series and parallel circuits','Diodes, transistors and basic semiconductor behavior','Reading and interpreting circuit diagrams','How digital circuits are built out of analog components','Lab: building and testing simple circuits']},
@@ -716,7 +717,7 @@ const COURSES = [
  why:"Plants the seed for students who'll eventually build products, not just code them.",
  topics:['What makes an idea a viable business','The business model canvas, in practice','Recognizing and validating opportunities','Basics of startup funding and pitching','Short case studies of small ventures']},
 {code:'ANT101', lab:null, title:'Anthropology', credits:3, sem:1, cluster:'gen-ed', category:'uni-elective', prereq:null,
- why:"Best if you're curious why people and societies behave the way they do — useful groundwork if you're drawn to UX or HCI later.",
+ why:"Best if you're curious why people and societies behave the way they do. Useful groundwork if you're drawn to UX or HCI later.",
  topics:['What culture is, and how anthropologists study it','Human evolution and the origins of society, at an intro level','Kinship, ritual and belief systems across cultures','Basic fieldwork and ethnography methods','Case studies of different societies']},
 {code:'PLS101', lab:null, title:'Introduction to Political Science', credits:3, sem:1, cluster:'gen-ed', category:'uni-elective', prereq:null,
  why:"Best if you want to understand the systems that end up regulating tech policy and data law.",
@@ -728,18 +729,18 @@ const COURSES = [
  why:"Best if you're interested in how global politics shapes tech policy, trade and outsourcing.",
  topics:['Key theories of international relations','The state system and diplomacy basics','International organizations, like the UN','Globalization and its effects','Pakistan\'s foreign policy in outline']},
 {code:'CSSS1813', lab:null, title:'Pre-Calculus', credits:3, sem:1, cluster:'theory-math', category:'math-sci', prereq:null,
- why:"Only assigned if your placement test shows you need it before Calculus — a math on-ramp, not an extra burden.",
+ why:"Only assigned if your placement test shows you need it before Calculus. A math on-ramp, not an extra burden.",
  topics:['Algebra refresher','Functions and their graphs','Exponentials and logarithms','Trigonometry basics','Direct preparation for Calculus']},
 
 // ---------------- SEMESTER 2 ----------------
 {code:'CSCP1013', lab:'CSCP1011', title:'Programming Fundamentals', credits:'3+1', sem:2, cluster:'prog-dev', category:'core', prereq:'CSCS1513',
- why:"The single most important course in the entire degree — everything from here on assumes you can write and debug real code.",
+ why:"The single most important course in the entire degree. Everything from here on assumes you can write and debug real code.",
  topics:['Variables, data types and operators','Conditionals and control flow','Loops and iteration patterns','Functions and scope','Arrays and basic data organization','Reading error messages and debugging systematically','Breaking a problem down before you code it','Lab: dozens of small programs to build real muscle memory']},
 {code:'CSCS2523', lab:'CSCS2521', title:'Digital Logic and Design', credits:'3+1', sem:2, cluster:'sys-arch', category:'core', prereq:'CSSS1723',
- why:"Shows you, gate by gate, how '1+1' becomes a physical electrical signal — the bridge between electronics and computing.",
+ why:"Shows you, gate by gate, how '1+1' becomes a physical electrical signal: the bridge between electronics and computing.",
  topics:['Boolean algebra and logic gates','Truth tables and Karnaugh maps','Combinational circuits: adders, multiplexers','Sequential circuits: flip-flops, counters','How an ALU is built from these primitives','Lab: building and simulating simple digital circuits']},
 {code:'ENG102', lab:null, title:'Communication & Presentation Skills', credits:3, sem:2, cluster:'gen-ed', category:'gen-ed', prereq:'ENG101',
- why:"You'll present projects constantly from Semester 3 onward — this is where you learn not to freeze up.",
+ why:"You'll present projects constantly from Semester 3 onward. This is where you learn not to freeze up.",
  topics:['Structuring a presentation that lands','Public speaking and delivery technique','Designing slides as visual aids, not text dumps','Handling Q&A under pressure','Professional workplace communication']},
 {code:'CSSS1713', lab:null, title:'Calculus and Analytical Geometry', credits:3, sem:2, cluster:'theory-math', category:'math-sci', prereq:null,
  why:"Feeds directly into algorithm complexity, graphics and machine learning math later.",
@@ -750,13 +751,13 @@ const COURSES = [
 
 // ---------------- SEMESTER 3 ----------------
 {code:'CSCP2023', lab:'CSCP2021', title:'Object Oriented Programming', credits:'3+1', sem:3, cluster:'prog-dev', category:'core', prereq:'CSCP1013',
- why:"Every real-world codebase you'll touch as a developer is organized this way — 'thinking like a programmer' becomes 'thinking like a software engineer.'",
+ why:"Every real-world codebase you'll touch as a developer is organized this way. 'Thinking like a programmer' becomes 'thinking like a software engineer.'",
  topics:['Classes, objects and constructors','Encapsulation and access control','Inheritance and polymorphism','Abstract classes and interfaces','Exception handling','A first taste of design patterns','Lab: building a multi-class application from scratch']},
 {code:'CSCS3543', lab:'CSCS3541', title:'Computer Organization and Assembly Language', credits:'3+1', sem:3, cluster:'sys-arch', category:'core', prereq:'CSCS2523',
- why:"The last stop before things get abstract — after this you'll actually understand what a compiler is doing to your code.",
+ why:"The last stop before things get abstract. After this you'll actually understand what a compiler is doing to your code.",
  topics:['CPU architecture and the fetch-decode-execute cycle','Registers and the memory hierarchy (cache, RAM, disk)','Instruction sets and addressing modes','Writing and tracing simple assembly programs','How high-level code becomes machine instructions','Lab: hands-on assembly programming']},
 {code:'CSSS2733', lab:null, title:'Multivariate Calculus', credits:3, sem:3, cluster:'theory-math', category:'math-sci', prereq:'CSSS1713',
- why:"Sets you up for machine learning math — gradient descent — two years from now.",
+ why:"Sets you up for machine learning math, gradient descent, two years from now.",
  topics:['Partial derivatives','Multiple integrals','Vector calculus basics','Gradient and divergence intuition','Applications to optimization']},
 {code:'CSAL1213', lab:null, title:'Discrete Structure', credits:3, sem:3, cluster:'theory-math', category:'core', prereq:null,
  why:"The mathematical language every algorithms and theory course after this will assume you already speak.",
@@ -770,10 +771,10 @@ const COURSES = [
 
 // ---------------- SEMESTER 4 ----------------
 {code:'CSCP2033', lab:'CSCP2031', title:'Data Structures & Algorithms', credits:'3+1', sem:4, cluster:'prog-dev', category:'core', prereq:'CSCP2023',
- why:"Arguably the single most interview-relevant course in the degree — this is what technical interviews test.",
+ why:"Arguably the single most interview-relevant course in the degree. This is what technical interviews test.",
  topics:['Arrays, linked lists, stacks and queues','Trees: binary trees, BSTs, balanced trees','Hashing and hash tables','Graphs and traversal: BFS and DFS','Recursion in real depth','Complexity trade-offs between structures','Lab: implementing every structure from scratch']},
 {code:'CSDB2313', lab:'CSDB2311', title:'Introduction to Database Systems', credits:'3+1', sem:4, cluster:'data-ai', category:'core', prereq:'CSCP1013',
- why:"Nearly every application you'll ever build needs to store data somewhere — this is that 'somewhere.'",
+ why:"Nearly every application you'll ever build needs to store data somewhere. This is that 'somewhere.'",
  topics:['The relational model and relational algebra basics','SQL: queries, joins, aggregation','Entity-relationship modeling','Normalization from 1NF to 3NF','Transactions and basic concurrency concepts','Lab: designing and querying a real database']},
 {code:'CSSS2743', lab:null, title:'Probability and Statistics', credits:3, sem:4, cluster:'theory-math', category:'math-sci', prereq:null,
  why:"The statistical backbone for every AI, ML and data science course later in the degree.",
@@ -790,7 +791,7 @@ const COURSES = [
  why:"The shift from 'writing a program' to 'building a maintainable product with a team' starts here.",
  topics:['SDLC models: waterfall, agile, scrum','Requirements gathering and analysis','Software design principles','Intro to UML diagrams','Basic project planning and estimation','Version control practices']},
 {code:'CSAL3233', lab:null, title:'Design and Analysis of Algorithm', credits:3, sem:5, cluster:'theory-math', category:'core', prereq:'CSCP2033',
- why:"This is where 'it works' becomes 'it works efficiently at scale' — the course most students cite as formative.",
+ why:"This is where 'it works' becomes 'it works efficiently at scale,' the course most students cite as formative.",
  topics:['Asymptotic analysis: Big-O and Big-Theta','Divide-and-conquer strategies','Greedy algorithms','Dynamic programming','Graph algorithms: shortest path, minimum spanning tree','A first look at NP-completeness']},
 {code:'CSSS2763', lab:null, title:'Differential Equation', credits:3, sem:5, cluster:'theory-math', category:'math-sci', prereq:'CSSS2733',
  why:"Occasionally resurfaces in simulation, robotics and signal-processing-flavored electives.",
@@ -825,10 +826,10 @@ const COURSES = [
  why:"Explains what actually happens between you hitting 'send' and a message arriving somewhere else in the world.",
  topics:['The OSI and TCP/IP models','IP addressing and subnetting basics','Routing and switching fundamentals','Common protocols: HTTP, DNS, TCP/UDP','Intro to network security concepts','Lab: basic network configuration and packet analysis']},
 {code:'CSAL3253', lab:null, title:'Theory of Automata', credits:3, sem:6, cluster:'theory-math', category:'core', prereq:'CSAL1213',
- why:"The famous 'why some problems can never be solved by any computer' course — theoretical, but it reframes how you think about programming.",
+ why:"The famous 'why some problems can never be solved by any computer' course. Theoretical, but it reframes how you think about programming.",
  topics:['Finite automata: DFA and NFA','Regular expressions and regular languages','Context-free grammars and pushdown automata','Intro to Turing machines','The limits of computability']},
 {code:'CSHU2813', lab:null, title:'Technical and Report Writing', credits:3, sem:6, cluster:'gen-ed', category:'gen-ed', prereq:'ENG101',
- why:"The skill that makes your final year project report — and every future work document — actually readable.",
+ why:"The skill that makes your final year project report, and every future work document, actually readable.",
  topics:['Structuring a technical report','Writing clear documentation','Explaining technical processes to non-technical readers','Citation and referencing for technical work']},
 {code:'CSAL3283', lab:null, title:'Storytelling and Game Design', credits:1, sem:6, cluster:'web-mobile', category:'cs-elective', prereq:null,
  why:"For students eyeing game development or interactive-media projects.",
@@ -857,7 +858,7 @@ const COURSES = [
  why:"Increasingly non-optional literacy for any developer shipping anything that touches the internet.",
  topics:['Cryptography basics: symmetric and asymmetric encryption','Common attack types: phishing, injection, malware','Network and application security principles','Intro to security policy and risk assessment']},
 {code:'CSCS4573', lab:null, title:'Compiler Construction', credits:4, sem:7, cluster:'sys-arch', category:'core', prereq:'CSAL3253',
- why:"Demystifies what 'compiling' actually means — and makes every future programming language feel less magical.",
+ why:"Demystifies what 'compiling' actually means, and makes every future programming language feel less magical.",
  topics:['Lexical analysis and tokenizing','Parsing and syntax trees','Semantic analysis basics','Intro to code generation and optimization']},
 {code:'CSAL4263', lab:null, title:'Numerical Computing', credits:4, sem:7, cluster:'theory-math', category:'core', prereq:'CSSS1713',
  why:"The math you use when an equation can't be solved neatly by hand and has to be approximated by code.",
@@ -883,7 +884,7 @@ const COURSES = [
  why:"The 'here's how not to get yourself or your company in trouble' course.",
  topics:['Professional ethics and codes of conduct','Intellectual property basics','Workplace responsibility and accountability','Case studies of ethical dilemmas in tech']},
 {code:'CSSE4183', lab:null, title:'Final Year Project II', credits:1, sem:8, cluster:'prog-dev', category:'core', prereq:'CSSE4173',
- why:"Where the project you scoped in FYP I becomes a finished, demoable piece of work — the centerpiece of your portfolio.",
+ why:"Where the project you scoped in FYP I becomes a finished, demoable piece of work: the centerpiece of your portfolio.",
  topics:['Completing the implementation','Testing and validating the system','Writing the final project report','Preparing and delivering the final defense and demo']},
 {code:'CSCS2543', lab:null, title:'Parallel And Distributed Computing', credits:7, sem:8, cluster:'sys-arch', category:'core', prereq:'CSCS3553',
  why:"As multicore and cloud become the default, this explains how to actually use all those cores.",
@@ -895,7 +896,7 @@ const COURSES = [
  why:"The discipline that separates 'it works on my machine' from 'it works, period.'",
  topics:['Quality models and metrics','QA processes across the SDLC','Code review practices','Intro to test planning']},
 {code:'CSSE4193', lab:null, title:'Software Testing', credits:2, sem:8, cluster:'prog-dev', category:'core', prereq:'CSSE3113',
- why:"Pairs directly with QA — this is the hands-on half.",
+ why:"Pairs directly with QA. This is the hands-on half.",
  topics:['Test case design techniques','Unit, integration and system testing','Intro to test automation','Bug tracking and reporting']},
 {code:'CSMG4913', lab:null, title:'Fundamentals of Enterprise Resource Planning', credits:3, sem:8, cluster:'biz-prof', category:'cs-elective', prereq:'CSMG1933',
  why:"Relevant if you end up working with the software that runs the back office of large companies.",
@@ -916,7 +917,7 @@ const COURSE_BY_CODE = Object.fromEntries(COURSES.map(c=>[c.code, c]));
 const SEMESTERS = [1,2,3,4,5,6,7,8];
 const reduceMotion = (typeof window.matchMedia === 'function') && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// The four Sem-1 university elective options are one requirement, not four —
+// The four Sem-1 university elective options are one requirement, not four.
 // collapse them into a single synthetic card in every listing view. The
 // individual options remain fully intact in COURSES / the comparison section.
 const UNI_ELECTIVE_OPTIONS = COURSES.filter(c=>c.category==='uni-elective');
@@ -958,7 +959,7 @@ const state = {
 };
 
 /* =========================================================
-   LOADER — builds the 8-semester stepper live, then reveals
+   LOADER: builds the 8-semester stepper live, then reveals
    the page. Tap anywhere to skip. Respects reduced-motion.
    ========================================================= */
 function runLoader(){
@@ -1029,7 +1030,7 @@ function renderStats(){
 function renderCategoryChips(){
   const el = document.getElementById('categoryChips');
   const allActive = state.category===null;
-  let html = `<button class="chip ${allActive?'active':''}" data-cat="__all__">All</button>`;
+  let html = `<button class="chip ${allActive?'active':''}" data-cat="all">All</button>`;
   html += CATEGORIES.map(cat=>{
     const active = state.category===cat.id;
     return `<button class="chip ${active?'active':''}" data-cat="${cat.id}"><span class="dot" style="background:${cat.fg}"></span>${cat.label}</button>`;
@@ -1038,7 +1039,7 @@ function renderCategoryChips(){
   el.querySelectorAll('.chip').forEach(chip=>{
     chip.addEventListener('click', ()=>{
       const id = chip.getAttribute('data-cat');
-      state.category = (id==='__all__') ? null : id;
+      state.category = (id==='all') ? null : id;
       renderAll();
     });
   });
@@ -1209,7 +1210,7 @@ function renderResults(){
   const searchPanel = document.getElementById('searchResultsPanel');
 
   if (state.search){
-    // SEARCH MODE — results render immediately below the search box;
+    // SEARCH MODE: results render immediately below the search box.
     // the browse chrome (chips/cluster/stepper/default section) hides
     // so nothing pushes results out of view, especially on mobile.
     browseControls.style.display = 'none';
@@ -1235,7 +1236,7 @@ function renderResults(){
     return;
   }
 
-  // BROWSE MODE — normal semester / cluster / category browsing.
+  // BROWSE MODE: normal semester, cluster, or category browsing.
   browseControls.style.display = '';
   stepperWrap.style.display = '';
   resultsSection.style.display = '';
@@ -1265,7 +1266,7 @@ function renderResults(){
 }
 
 /* =========================================================
-   PREREQUISITE CHAINS — click a node to mark it "done" and
+   PREREQUISITE CHAINS: click a node to mark it "done" and
    see what unlocks next. Codes are pulled from real prereq
    links already present in COURSES.
    ========================================================= */
@@ -1320,11 +1321,12 @@ function renderChains(){
 }
 
 /* =========================================================
-   ELECTIVE COMPARISON (University Elective — pick 1 of 4)
-   CS ELECTIVE MENU — both clickable accordions, same pattern
+   ELECTIVE COMPARISON (University Elective: pick 1 of 4)
+   CS ELECTIVE MENU: both clickable accordions, same pattern
    as the main course cards.
    ========================================================= */
 const openElectives = new Set();
+const openCSEGroups = new Set();
 
 function electiveCardHTML(c, extra){
   const open = openElectives.has(c._id);
@@ -1356,8 +1358,11 @@ function wireElectiveCards(container){
     card.addEventListener('click', ()=>{
       const id = card.getAttribute('data-id');
       if (openElectives.has(id)) openElectives.delete(id); else openElectives.add(id);
-      renderElectiveComparison();
-      renderCSElectiveMenu();
+      // only re-render the grid this card actually belongs to.
+      // re-rendering the other grid is wasted work and (for the
+      // grouped CS grid) would otherwise reset scroll/animation state.
+      if (container.id === 'electiveGrid') renderElectiveComparison();
+      else renderCSElectiveMenu();
     });
   });
 }
@@ -1378,26 +1383,29 @@ function renderCSElectiveMenu(){
 
   grid.innerHTML = CLUSTERS.filter(cl=>groups[cl.id]).map(cl=>{
     const list = groups[cl.id];
+    const isOpen = openCSEGroups.has(cl.id);
     return `
-    <div class="cse-group">
+    <div class="cse-group ${isOpen?'expanded':''}" data-cluster="${cl.id}">
       <button class="cse-group-toggle" data-cluster="${cl.id}">
         <span class="cse-group-title"><span class="dot" style="background:${cl.hex}"></span>${cl.name} <span class="cse-group-count">${list.length}</span></span>
         <svg width="10" height="10" viewBox="0 0 14 14" fill="none"><path d="M3 5.5L7 9.5L11 5.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
-      <div class="cse-group-collapse">
+      <div class="cse-group-collapse"><div class="cse-group-collapse-inner">
         <div class="elective-grid cse-inner-grid">
           ${list.map(c=>{
             const extra = `<span class="sem-tag" style="color:${cl.hex}">Usually Semester ${c.sem}</span>`;
             return electiveCardHTML(c, extra);
           }).join('')}
         </div>
-      </div>
+      </div></div>
     </div>`;
   }).join('');
 
   wireElectiveCards(grid);
   grid.querySelectorAll('.cse-group-toggle').forEach(btn=>{
     btn.addEventListener('click', ()=>{
+      const id = btn.getAttribute('data-cluster');
+      if (openCSEGroups.has(id)) openCSEGroups.delete(id); else openCSEGroups.add(id);
       btn.closest('.cse-group').classList.toggle('expanded');
     });
   });
